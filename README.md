@@ -16,3 +16,6 @@ Prerequisites:
 Limitations:
 - This script DOES NOT update the band information FROM the KPA500 towards the TRX
 
+Edited locally
+
+
