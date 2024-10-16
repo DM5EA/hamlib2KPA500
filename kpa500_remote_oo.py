@@ -50,7 +50,7 @@
 #     readConfig - looks for the file and reads it or sets default values 
 #     writeConfig - takes the variables to write a parameters and writes the config file
 #
-# Version 0.1.0:
+# Version 0.1.0 (2024-10-15):
 #   - Config edit window as part of the config class
 #     Parameter saving works for pwr per band
 #   - Read paramter -c <configFileName>
