@@ -7,3 +7,10 @@ The following functions are available:
 - Store the power output of the TRX toward the KPA500 on a band basis
 - Show operational parameters of the KPA500 (temperature, voltage, current, fail)
 
+Prerequisites:
+- python3
+- hamlib python modul installed
+- KPA500 connected to the computer running the script via serial interface
+- TRX connected either via a rigctld on another computer in the network or via USB/serial interface to the computer running the script
+
+
