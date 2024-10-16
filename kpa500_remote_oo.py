@@ -59,11 +59,10 @@
 # Version 0.1.1 (2024-10-16)
 #   - Change the power setting to sliders (0-40) in the config window
 #     options: showvalue = 0 (and organize a label beside the slider to show the value)
+#   - Continue the version history in HISTORY.md on github
 #
 # Future plans:
-#   - One class for the main window (we need to clarify how to call methods in an initiated 
-#     class from another class - see the ICOM.py example)
-#   - Show both band selections (KPA500 and TRX) 
+#   - See issues on github
 #
 
 import KPA500
