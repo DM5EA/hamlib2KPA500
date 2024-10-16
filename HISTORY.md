@@ -1,5 +1,6 @@
 ### Version 0.1.1 (2024-10-16)
 - In the settings window changed the control of TRX output power to sliders.
+- In case the band is switched manually on the KPA500 a check provides a warning now.
 
 ### Version 0.1.0 (2024-10-15)
 - First reliable version loaded up to github.
