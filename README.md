@@ -1,1 +1,1 @@
-# KPA5002hamlib
+# hamlib2KPA500
