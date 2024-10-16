@@ -8,6 +8,13 @@
 - Read paramter -c <configFileName>
 - Use the python hamlib interface for TRX control
 
+### Version 0.0.5:
+- Fix from 0.0.4 still not perfect
+- Idea to implement: Set PWR of TRX according to status of the PA via rigctl<br>
+                      ON and OPER: 30 W (30 m - 0.18)
+                      OFF or STBY: 100 W
+- Basically done - more to check
+
 ### Version 0.0.4
 - Fix bug: If the PA switch on with the button on the device, the band change
             does not occure. How to wait for the startup delay, if we don't know
@@ -20,13 +27,7 @@
 - Added handling of the Fault conditions of the PA
 - First edition via Textastic +++
 - Cleaned the code a bit and added more comments
-#
-# Version 0.0.5:
-#   Fix from 0.0.4 still not perfect
-#   Idea to implement: Set PWR of TRX according to status of the PA via rigctl
-#                      ON and OPER: 30 W (30 m - 0.18)
-#                      OFF or STBY: 100 W
-#   Basically done - more to check
+
 #
 # Version 0.0.6:
 #   - Starting with some classes for KPA500 and TRX
