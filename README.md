@@ -13,4 +13,6 @@ Prerequisites:
 - KPA500 connected to the computer running the script via serial interface
 - TRX connected either via a rigctld on another computer in the network or via USB/serial interface to the computer running the script
 
+Limitations:
+- This script DOES NOT update the band information FROM the KPA500 towards the TRX
 
