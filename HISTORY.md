@@ -11,8 +11,10 @@
 ### Version 0.0.5:
 - Fix from 0.0.4 still not perfect
 - Idea to implement: Set PWR of TRX according to status of the PA via rigctl<br>
+<pre>
                       ON and OPER: 30 W (30 m - 0.18)
                       OFF or STBY: 100 W
+</pre>
 - Basically done - more to check
 
 ### Version 0.0.4
