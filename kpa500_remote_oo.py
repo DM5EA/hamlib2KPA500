@@ -68,7 +68,7 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.1.0'
+  version = '0.1.1'
    
   myConfig = ProgConfig.ProgConfig()
  
@@ -154,10 +154,14 @@ if __name__ == '__main__':
 
 # Now place all elements in the frames
 
-  BandLabel = Label(topBandframe, text = " Band: ", bg='yellow2')
+  BandLabel = Label(topBandframe, text = " Band (TRX): ", bg='yellow2')
   BandLabel.pack(side=LEFT)
   ActBandLabel = Label(topBandframe, text = '', bg='yellow2')
   ActBandLabel.pack(side=LEFT)
+  Band1Label = Label(topBandframe, text = " Band (KPA500): ", bg='yellow2')
+  Band1Label.pack(side=LEFT)
+  ActBand1Label = Label(topBandframe, text = '', bg='yellow2')
+  ActBand1Label.pack(side=LEFT)
 
 # Define the canvas for power level display.
 # Do this in 3 parts <= 500 W green, 500-650 yellow, > 650 W red
@@ -422,7 +426,20 @@ if __name__ == '__main__':
             FANCTRLSlider.set(int(myKPA500.getFanSpeed()))
           except:
             FANCTRLSlider.set(0)
-            
+
+# Get actual band from KPA500
+
+          resp = myKPA500.getBand()
+          ActBand1Label.configure(text = resp)
+          if resp != myTRX.actBand:
+            ActBandLabel.configure(foreground='red')
+            ActBand1Label.configure(foreground='red')
+          else:
+            ActBandLabel.configure(foreground='black')
+            ActBand1Label.configure(foreground='black')
+          
+          
+
 # We assume the else part as the PA is switched off
 
       else:
@@ -441,6 +458,7 @@ if __name__ == '__main__':
           AmpValue.configure(text = '-')
           FWValue.configure(text = '-')
           SerNValue.configure(text = '-')
+          ActBand1Label.configure(text = '-')
 
 # Do the next part because after switch off and on the band of the PA is reset
 # to 10 MHz and not switched to the right band otherwise

@@ -40,6 +40,7 @@ class KPA500:
     self.FLCMD = '^FL;'         # Get the fault info
     self.FLresetCMD = '^FLC;'   # Reset fault
     self.FNCMD = '^FC'          # Get/Set minimum fan speed
+    self.BNCMD = '^BN;'
  
     self.KPA500_ready = False
     self.OperStat = False       # Shows, if KPA500 is in Oper status
@@ -121,8 +122,30 @@ class KPA500:
       self.actBN = BN
       return BN 
 
-#  def setInitialPWR(func):
-#    func()
+  def getBand(self):
+      cmd = self.getValue(self.BNCMD)
+      BN = ''
+      if cmd == '^BN00;':
+        BN = '160 m '
+      elif cmd == '^BN01;':
+        BN = '80 m '
+      elif cmd == '^BN03;':
+        BN = '40 m '
+      elif cmd == '^BN04;':
+        BN = '30 m '
+      elif cmd == '^BN05;':
+        BN = '20 m '
+      elif cmd == '^BN06;':
+        BN = '17 m '
+      elif cmd == '^BN07;':
+        BN = '15 m '
+      elif cmd == '^BN08;':
+        BN = '12 m '
+      elif cmd == '^BN09;':
+        BN = '10 m '
+      elif cmd == '^BN10;':
+        BN = '6 m '
+      return BN 
 
   def ResetFault(self):
     self.sendCMD(self.FLresetCMD)
