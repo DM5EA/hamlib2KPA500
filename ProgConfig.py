@@ -131,7 +131,7 @@ class ProgConfig:
       self.ConfigWindow,
       text="Save",
       command= lambda: self.saveSettings(),
-      width = 5
+      width = 6
     )
     SaveButton.grid(row=12, column=3, columnspan=1, padx=1, pady=5)
     
@@ -139,7 +139,7 @@ class ProgConfig:
       self.ConfigWindow,
       text="Close",
       command=self.ConfigWindow.destroy,
-      width = 5
+      width = 6
     )
     CancelButton.grid(row=12, column=4, columnspan=1, padx=1, pady=5)
 

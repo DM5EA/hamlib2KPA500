@@ -68,7 +68,7 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.1.1'
+  version = '0.1.2'
    
   myConfig = ProgConfig.ProgConfig()
  
@@ -251,19 +251,19 @@ if __name__ == '__main__':
 
 # All the buttons
 
-  OperButton = Button(bottomframe, text = 'Oper', command = lambda: myKPA500.sendCMD(myKPA500.OperCMD), width = 7, bg='green') 
+  OperButton = Button(bottomframe, text = 'Oper', command = lambda: myKPA500.sendCMD(myKPA500.OperCMD), width = 6, bg='green') 
   OperButton.pack(padx=3, side=LEFT)
 
-  StbyButton = Button(bottomframe, text = 'Stby', command = lambda: myKPA500.sendCMD(myKPA500.StbyCMD), width = 7, bg='orange') 
+  StbyButton = Button(bottomframe, text = 'Stby', command = lambda: myKPA500.sendCMD(myKPA500.StbyCMD), width = 6, bg='orange') 
   StbyButton.pack(padx=3, side=LEFT)
 
-  OnButton = Button(bottomframe, text = 'On', command = lambda: myKPA500.switchON(), width = 7, bg='green') 
+  OnButton = Button(bottomframe, text = 'On', command = lambda: myKPA500.switchON(), width = 6, bg='green') 
   OnButton.pack(padx=3, side=LEFT)
 
-  OffButton = Button(bottomframe, text = 'Off', command = lambda: myKPA500.sendCMD(myKPA500.OffCMD), width = 7) 
+  OffButton = Button(bottomframe, text = 'Off', command = lambda: myKPA500.sendCMD(myKPA500.OffCMD), width = 6) 
   OffButton.pack(padx=3, side=LEFT)
 
-  ConfigButton = Button(bottomframe, text = 'Settings', command = lambda: myConfig.openConfigWindow(), width = 7) 
+  ConfigButton = Button(bottomframe, text = 'Settings', command = lambda: myConfig.openConfigWindow(), width = 6) 
   ConfigButton.pack(padx=3, side=LEFT)
   
   ExitButton = Button(bottomframe, text = 'Exit', command = quit, width = 7) 
@@ -327,7 +327,10 @@ if __name__ == '__main__':
           OnButton.config(activebackground=OnButton.cget('background'))  # set the button
           OnButton.config(activeforeground=OnButton.cget('foreground'))
           pwr = Sresp[3:6]
-          ipwr = int(pwr)
+          try:
+            ipwr = int(pwr)
+          except:
+            pass
           x1 = min(ipwr, 500) * 0.736
           PwrCanvas.coords(PwrGreenRect, 0, 0, x1, 20)
           if ipwr > 500:
@@ -342,7 +345,10 @@ if __name__ == '__main__':
             PwrCanvas.coords(PwrRedRect, 414, 0, 414, 20)
 
           swr = Sresp[7:10]
-          iswr = int(swr)
+          try:
+            iswr = int(swr)
+          except:
+            pass
           x1 = min(iswr-10, 5) * 16
           SwrCanvas.coords(SwrGreenRect, 0, 0, x1, 20)
           if iswr > 15:
@@ -378,7 +384,10 @@ if __name__ == '__main__':
 
           Sresp = myKPA500.getValue(myKPA500.TempCMD)
           if Sresp[3:6] != ';' and Sresp[3:6] != '':
-            Temp = int(Sresp[3:6])
+            try:
+              Temp = int(Sresp[3:6])
+            except:
+              pass
             TempValue.configure(text = Temp)
 
 # Read voltage and current
