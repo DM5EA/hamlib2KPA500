@@ -1,11 +1,17 @@
 # hamlib2KPA500
 
-Python script to synchronize the parameters read from TRX via hamlib to an Elecraft KPA500 PA.
+This project started when I obtained an used KPA500 and thought about how to control remote. I already own an ICOM7610 
+which is a perfect remote able radio using SDR-Control.
 
-The following functions are available:
+So based on this I started this python project. In my case the KPA500 and the ICOM 7610 are connected to a Rasperry 4. The script
+runs on this Raspberry and via RVNC I'm able to control the KPA500 from remote. As I'm using the hamlib python modul to read the 
+frequency from the TRX this solution should work with every other TRX hamlib is able to control.
+
+By today the following functions are available:
 - Switch band of the KPA500 according to the frequency on the TRX
 - Store the power output of the TRX toward the KPA500 on a band basis
 - Show operational parameters of the KPA500 (temperature, voltage, current, fail)
+- Ability to reset a hard failure from remote
 
 Prerequisites:
 - python3
@@ -13,7 +19,7 @@ Prerequisites:
 - KPA500 connected to the computer running the script via serial interface
 - TRX connected either via a rigctld on another computer in the network or via USB/serial interface to the computer running the script
 
-Limitations:
+Current limitations:
 - This script DOES NOT update the band information FROM the KPA500 towards the TRX
 
 
