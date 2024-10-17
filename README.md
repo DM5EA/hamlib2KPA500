@@ -20,7 +20,8 @@ Prerequisites:
 - TRX connected either via a rigctld on another computer in the network or via USB/serial interface to the computer running the script
 
 Current limitations:
-- This script DOES NOT update the band information FROM the KPA500 towards the TRX
+- This script DOES NOT update the band information FROM the KPA500 towards the TRX.
+- The script is tested on LinuX only for the time being.
 
 Below there is a screen shot of both windows.
 
