@@ -24,6 +24,5 @@ Current limitations:
 
 Below there is a screen shot of both windows.
 
-![screenshot](kpa500_remote.0.1.1.png)
-
+![screenshot](kpa500_remote.0.1.1.jpeg)
 
