@@ -1,3 +1,6 @@
+### Version 0.1.3 (2024-10-18)
+- Always open the settings window below the main window
+
 ### Version 0.1.2 (2024-10-17)
 - Fixing some data conversion bugs
 
