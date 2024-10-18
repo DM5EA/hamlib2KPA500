@@ -1,5 +1,6 @@
 import json
 import os.path
+from sys import platform
 from tkinter import *
 
 # Class to handle all configuration parameters 
@@ -67,12 +68,16 @@ class ProgConfig:
 
 # Build the config windows
 
-  def openConfigWindow(self):
+  def openConfigWindow(self,rootWindow):
 
     self.ConfigWindow = Toplevel()
-    self.ConfigWindow.title("Show settings")
+    self.ConfigWindow.title("Settings")
     self.ConfigWindow.config(width=550, height=250)
     self.ConfigWindow.minsize(550,250)
+    toplevel_offsetx, toplevel_offsety = rootWindow.winfo_x(), rootWindow.winfo_y() + rootWindow.winfo_height()
+    padx = 0
+    pady = 50
+    self.ConfigWindow.geometry(f"+{toplevel_offsetx + padx}+{toplevel_offsety + pady}")
     
     Label00 = Label(self.ConfigWindow, text = "TRX power per band", highlightbackground="orange", highlightthickness=1)
     Label00.grid(row=0, column=0, columnspan=3, padx=1, pady=3)

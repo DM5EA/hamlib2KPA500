@@ -68,7 +68,7 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.1.2'
+  version = '0.1.3'
    
   myConfig = ProgConfig.ProgConfig()
  
@@ -122,7 +122,7 @@ if __name__ == '__main__':
   topSWRframe = Frame(root)
   topSWRframe.pack(pady=2,side=TOP)
 
-# Frame to show the curren values
+# Frame to show the current values
 
   topValuesframe = Frame(root, highlightbackground="orange", highlightthickness=1)
   topValuesframe.pack(pady=2,side=TOP)
@@ -263,7 +263,7 @@ if __name__ == '__main__':
   OffButton = Button(bottomframe, text = 'Off', command = lambda: myKPA500.sendCMD(myKPA500.OffCMD), width = 6) 
   OffButton.pack(padx=3, side=LEFT)
 
-  ConfigButton = Button(bottomframe, text = 'Settings', command = lambda: myConfig.openConfigWindow(), width = 6) 
+  ConfigButton = Button(bottomframe, text = 'Settings', command = lambda: myConfig.openConfigWindow(root), width = 6) 
   ConfigButton.pack(padx=3, side=LEFT)
   
   ExitButton = Button(bottomframe, text = 'Exit', command = quit, width = 7) 
