@@ -15,7 +15,10 @@ By today the following functions are available:
 
 Prerequisites:
 - python3
-- hamlib python modul installed
+- hamlib python modul installed 
+'''
+sudo apt-get install python3-hamlib
+'''
 - KPA500 connected to the computer running the script via serial interface
 - TRX connected either via a rigctld on another computer in the network or via USB/serial interface to the computer running the script
 
