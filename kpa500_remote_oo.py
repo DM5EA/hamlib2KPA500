@@ -312,8 +312,7 @@ if __name__ == '__main__':
       TRXPWRLevel.configure(text = TRXActPWR)
       
       if myKPA500.OperStat:
-        if myConfig.windowOpen:
-          myConfig.setPWRSliderForBand(newBand, TRXActPWR)
+        myConfig.setPWRSliderForBand(newBand, TRXActPWR)
         if TRXActPWR > 37:
           TRXPWRLevel.configure(foreground='red')
         else:

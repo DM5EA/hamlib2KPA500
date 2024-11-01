@@ -189,7 +189,8 @@ class ProgConfig:
     for key, value in self.PWRperBand.items():
       if band == key:
         self.PWRperBand[key] = pwr
-        self.bandPWRBox[i].set(pwr)
-        self.bandWattLabel[i].configure(text = str(self.bandPWRBox[i].get()) + ' W')
+        if self.windowOpen:
+          self.bandPWRBox[i].set(pwr)
+          self.bandWattLabel[i].configure(text = str(self.bandPWRBox[i].get()) + ' W')
 
       i+=1
