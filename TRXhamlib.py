@@ -51,7 +51,7 @@ class TRXhamlib:
     resp = self.myHamlib.get_level_f(Hamlib.RIG_LEVEL_RFPOWER)
     fPWR = 0
     try:
-      fPWR = int(float(resp) * 100.)
+      fPWR = int(float(resp) * 100.)+1
     except:
       pass
     self.actualPWR = fPWR

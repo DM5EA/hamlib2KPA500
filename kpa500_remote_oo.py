@@ -68,8 +68,8 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.1.3'
-   
+  version = '0.1.4'
+  
   myConfig = ProgConfig.ProgConfig()
  
 # read command line
@@ -93,11 +93,17 @@ if __name__ == '__main__':
 
   myTRX = TRXhamlib.TRXhamlib(myConfig.HAMLIBCONN,myConfig.HAMLIBRIG)
   myTRX.openConn()
+
+# Make the TRX connection known to the config window
+
+  myConfig.setHamlibContext(myTRX)
   
 # Initialize KPA500
 
   myKPA500 = KPA500.KPA500()
   myKPA500.openSerialConn(myConfig.COMPORT)
+  
+  myConfig.setKPA500Context(myKPA500)
 
 # Build the main window
 
@@ -274,6 +280,7 @@ if __name__ == '__main__':
   root.title("KPA500 Remote V " + version + " © DM5EA")
 
 # Loop until event is sent - frist thread - handle band changes
+# V 0.1.4 - Skip this if no TRX is present (KPA500 remote control only)
 
   def run_in_thread1(event):
     global QRG
@@ -303,10 +310,14 @@ if __name__ == '__main__':
 
       TRXActPWR = myTRX.getTXPWR()
       TRXPWRLevel.configure(text = TRXActPWR)
-      if myKPA500.OperStat and TRXActPWR > 37:
-        TRXPWRLevel.configure(foreground='red')
-      else:
-        TRXPWRLevel.configure(foreground='green')
+      
+      if myKPA500.OperStat:
+        if myConfig.windowOpen:
+          myConfig.setPWRSliderForBand(newBand, TRXActPWR)
+        if TRXActPWR > 37:
+          TRXPWRLevel.configure(foreground='red')
+        else:
+          TRXPWRLevel.configure(foreground='green')
 
       time.sleep(100/1000)
 

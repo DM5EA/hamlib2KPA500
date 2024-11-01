@@ -5,6 +5,9 @@ from tkinter import *
 
 # Class to handle all configuration parameters 
 
+# Important: The order of key value pairs in PWRperBand must much the order 
+#            of the scale widgets in the bandPWRBox
+
 class ProgConfig:
   def __init__(self):
     self.HAMLIBRIG = 2
@@ -29,6 +32,10 @@ class ProgConfig:
     
     self.bandPWRBox = []
     self.bandWattLabel = []
+    
+    self.hamlibContext = None
+    self.KPA500Context = None
+    self.windowOpen = False
 
 # Read the config from file (confFileName is a variable of this class)
 
@@ -107,7 +114,7 @@ class ProgConfig:
       bandArrLabel[i].grid(row=i+2, column=0, columnspan=1, padx=8, pady=1, sticky=W)
       self.bandPWRBox.append(Scale(self.ConfigWindow, from_=10, to=40, 
                              orient='horizontal', tickinterval=0, 
-                             length = 80, showvalue = 0, command=self.sliderMoved))
+                             length = 80, showvalue = 0, command = self.sliderMoved))
       self.bandPWRBox[i].set(value)
       self.bandPWRBox[i].grid(row=i+2, column=1, columnspan=1, padx=8, pady=1, sticky=W)
       self.bandWattLabel.append(Label(self.ConfigWindow, text = str(value) + ' W'))
@@ -131,29 +138,37 @@ class ProgConfig:
     comPortBox = Entry(self.ConfigWindow, width=17)
     comPortBox.insert(0, self.COMPORT)
     comPortBox.grid(row=4, column=4, columnspan=1, padx=6, pady=1, sticky=W)
-
-    SaveButton = Button(
-      self.ConfigWindow,
-      text="Save",
-      command= lambda: self.saveSettings(),
-      width = 6
-    )
-    SaveButton.grid(row=12, column=3, columnspan=1, padx=1, pady=5)
     
-    CancelButton = Button(
+    CloseButton = Button(
       self.ConfigWindow,
       text="Close",
-      command=self.ConfigWindow.destroy,
+      command=self.closeWindow,
       width = 6
     )
-    CancelButton.grid(row=12, column=4, columnspan=1, padx=1, pady=5)
+    CloseButton.grid(row=12, column=4, columnspan=1, padx=1, pady=5)
+    
+    self.windowOpen = True
 
+# Close window
+
+  def closeWindow(self):
+    self.windowOpen = False
+    self.ConfigWindow.destroy()
+  
 # Store the settings - limited currently to the power per band
 
-  def sliderMoved(self, event):
+  def sliderMoved(self, val):
     i = 0
-    for element in self.bandWattLabel:
-      element.configure(text = str(self.bandPWRBox[i].get()) + ' W')
+
+    for key, value in self.PWRperBand.items():
+      self.PWRperBand[key] = self.bandPWRBox[i].get()
+      self.bandWattLabel[i].configure(text = str(self.bandPWRBox[i].get()) + ' W')
+
+# Set the PWR for the TRX on the band it is currently
+
+      if key == self.hamlibContext.getActBand() and self.KPA500Context.OperStat:
+        self.hamlibContext.setTXPWR(self.PWRperBand[key])
+        
       i+=1
   
   def saveSettings(self):
@@ -163,4 +178,18 @@ class ProgConfig:
       self.PWRperBand[key] = self.bandPWRBox[i].get()
       i+=1
     
-#    self.ConfigWindow.destroy()    
+  def setHamlibContext(self, TRXconn):
+    self.hamlibContext = TRXconn
+    
+  def setKPA500Context(self, KPA500conn):
+    self.KPA500Context = KPA500conn
+    
+  def setPWRSliderForBand(self, band, pwr):
+    i = 0
+    for key, value in self.PWRperBand.items():
+      if band == key:
+        self.PWRperBand[key] = pwr
+        self.bandPWRBox[i].set(pwr)
+        self.bandWattLabel[i].configure(text = str(self.bandPWRBox[i].get()) + ' W')
+
+      i+=1
