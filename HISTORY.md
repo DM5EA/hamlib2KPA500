@@ -1,3 +1,8 @@
+### Version 0.1.4 (2024-11-01)
+- While the KPA500 is in operate mode, moving the power slider for the band the TRX is on changes the output power of the TRX
+- While the KPA500 is in operate mode, changing the output power of the TRX will move the slider in the config window
+- Moving a slider in the config window will automatically change all internal variables
+
 ### Version 0.1.3 (2024-10-18)
 - Always open the settings window below the main window
 
