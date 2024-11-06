@@ -23,6 +23,7 @@ import threading
 import os
 import json
 import os.path
+import ctypes
 
 from tkinter import *    # Doing this way, there is no need to write <module>.<class>
 
@@ -109,7 +110,7 @@ if __name__ == '__main__':
 
   root = Tk()
   root.geometry("550x320")     # Build the root TK element 
-
+  
   frame = Frame(root)
   frame.pack()
 
@@ -456,8 +457,6 @@ if __name__ == '__main__':
           else:
             ActBandLabel.configure(foreground='black')
             ActBand1Label.configure(foreground='black')
-          
-          
 
 # We assume the else part as the PA is switched off
 
