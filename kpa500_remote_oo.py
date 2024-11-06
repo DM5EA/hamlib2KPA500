@@ -110,6 +110,7 @@ if __name__ == '__main__':
 
   root = Tk()
   root.geometry("550x320")     # Build the root TK element 
+  root.resizable(False, False)
   
   frame = Frame(root)
   frame.pack()

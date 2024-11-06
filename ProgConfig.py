@@ -80,8 +80,9 @@ class ProgConfig:
     if not self.windowOpen:
       self.ConfigWindow = Toplevel()
       self.ConfigWindow.title("Settings")
-      self.ConfigWindow.config(width=550, height=250)
-      self.ConfigWindow.minsize(550,250)
+      self.ConfigWindow.config(width=550, height=320)
+      self.ConfigWindow.resizable(False, False)
+      self.ConfigWindow.minsize(550,320)
       toplevel_offsetx, toplevel_offsety = rootWindow.winfo_x(), rootWindow.winfo_y() + rootWindow.winfo_height()
       padx = 0
       pady = 30
