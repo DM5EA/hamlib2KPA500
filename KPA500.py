@@ -1,6 +1,8 @@
 import serial
 import time
 
+# Deamon mode: This class is ready
+
 class KPA500:
   def __init__(self):
     

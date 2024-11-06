@@ -1,0 +1,17 @@
+{
+   "PWRperBand": {
+      "80 m ": 31,
+      "40 m ": 31,
+      "30 m ": 24,
+      "20 m ": 36,
+      "17 m ": 33,
+      "15 m ": 34,
+      "12 m ": 33,
+      "10 m ": 34,
+      "6 m ": 35
+   },
+   "hamlibRig": 3078,
+   "hamlibConn": "/dev/ttyUSB1",
+   "KPA500ComPort": "/dev/ttyUSB0",
+   "FanSpeed": 0
+}

@@ -68,7 +68,7 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.1.4'
+  version = '0.1.5'
   
   myConfig = ProgConfig.ProgConfig()
  
@@ -309,7 +309,7 @@ if __name__ == '__main__':
         myKPA500.OldOperStat = myKPA500.OperStat
 
       TRXActPWR = myTRX.getTXPWR()
-      TRXPWRLevel.configure(text = TRXActPWR)
+      TRXPWRLevel.configure(text = TRXActPWR-1)
       
       if myKPA500.OperStat:
         myConfig.setPWRSliderForBand(newBand, TRXActPWR)
