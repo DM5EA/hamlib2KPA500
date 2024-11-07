@@ -1,3 +1,6 @@
+### Version 0.1.6 (2024-11-07)
+- Added an app icon
+
 ### Version 0.1.5 (2024-11-06)
 - Added a sample config file ```example_config.json```
 - Added handling of the window close button
