@@ -69,7 +69,7 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.1.5'
+  version = '0.1.6'
   
   myConfig = ProgConfig.ProgConfig()
  
@@ -111,6 +111,12 @@ if __name__ == '__main__':
   root = Tk()
   root.geometry("550x320")     # Build the root TK element 
   root.resizable(False, False)
+
+  appDir = os.path.dirname(__file__)
+  photo = PhotoImage(file = appDir + '/kpa500_remote_ico.png')
+  root.wm_iconphoto(True, photo)
+
+#  print(root.wm_sizefrom())
   
   frame = Frame(root)
   frame.pack()
@@ -297,7 +303,11 @@ if __name__ == '__main__':
           myKPA500.sendCMD((myKPA500.bandToCommand(newBand)))
           myTRX.ackBandChange()
         ActBandLabel.configure(text = newBand)
-      
+ 
+# Need to do this here and not in the other thread. Otherwise we might not get the
+# right power setting because of the wrong band used.
+# BUT: We might want to redo this part as it is a bit ugly
+ 
       if myKPA500.OldOperStat != myKPA500.OperStat:
         if myKPA500.OperStat:
           myTRX.getInitialPWR()
@@ -310,6 +320,8 @@ if __name__ == '__main__':
           myTRX.restoreInitialPWR()
         myKPA500.OldOperStat = myKPA500.OperStat
 
+# Handle the screen elements
+
       TRXActPWR = myTRX.getTXPWR()
       TRXPWRLevel.configure(text = TRXActPWR-1)
       
@@ -319,6 +331,8 @@ if __name__ == '__main__':
           TRXPWRLevel.configure(foreground='red')
         else:
           TRXPWRLevel.configure(foreground='green')
+
+# Redo until here (sometime)
 
       time.sleep(100/1000)
 
