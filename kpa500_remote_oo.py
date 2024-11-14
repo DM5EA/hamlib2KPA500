@@ -45,6 +45,7 @@ def quit():
   global root
   global thread1
   global thread2
+  global thread3
   global stop_event
   global myConfig
   
@@ -53,6 +54,7 @@ def quit():
   stop_event.set()
   thread1.join(0.1)
   thread2.join(0.1)
+  thread3.join(0.1)
   
   root.quit()
 
@@ -69,7 +71,7 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.1.6'
+  version = '0.1.7'
   
   myConfig = ProgConfig.ProgConfig()
  
@@ -300,9 +302,13 @@ if __name__ == '__main__':
 
       if myTRX.bandChanged():
         if myKPA500.KPA500_ready: 
+          myLock = threading.Lock()
+          myLock.acquire()
           myKPA500.sendCMD((myKPA500.bandToCommand(newBand)))
-          myTRX.ackBandChange()
-        ActBandLabel.configure(text = newBand)
+          myLock.release()
+          myKPA500.OperStat = False              # As per config of the KPA500 after band change it is set to STBY
+          myTRX.ackBandChange()                  # |--> We set this explicit here to avoid problems in PWR handling
+        ActBandLabel.configure(text = newBand)   # |--> The other thread might read to changed Oper State to late
  
 # Need to do this here and not in the other thread. Otherwise we might not get the
 # right power setting because of the wrong band used.
@@ -336,14 +342,13 @@ if __name__ == '__main__':
 
       time.sleep(100/1000)
 
-# Loop until event is sent - second thread - read all status
+# Loop until event is sent - second thread - read PWR for bar
 
   def run_in_thread2(event):
     
     while not event.is_set():
 
 # Read and display the current putput power and SWR
-      
       Sresp = myKPA500.getValue(myKPA500.PwrCMD)
 #      print(Sresp)
 #      print(KPA500_ready)
@@ -405,6 +410,46 @@ if __name__ == '__main__':
             OperButton.config(activeforeground=OperButton.cget('foreground'))
             StbyButton.configure(background='orange')
             StbyButton.config(activebackground=StbyButton.cget('background'))
+
+# We assume the else part as the PA is switched off
+
+      else:
+          myKPA500.KPA500_ready=False
+          myKPA500.OperStat=False
+          OnButton.configure(background=DefaultBtnColor,foreground='black')
+          OnButton.config(activebackground=OnButton.cget('background'))
+          OnButton.config(activeforeground=OnButton.cget('foreground'))
+          OperButton.configure(background=DefaultBtnColor,foreground='black')
+          OperButton.config(activebackground=OperButton.cget('background'))
+          OperButton.config(activeforeground=OperButton.cget('foreground'))
+          StbyButton.configure(background=DefaultBtnColor,foreground='black')
+          StbyButton.config(activebackground=StbyButton.cget('background'))
+          TempValue.configure(text = '-')
+          VoltValue.configure(text = '-')
+          AmpValue.configure(text = '-')
+          FWValue.configure(text = '-')
+          SerNValue.configure(text = '-')
+          ActBand1Label.configure(text = '-')
+
+# Do the next part because after switch off and on the band of the PA is reset
+# to 10 MHz and not switched to the right band otherwise
+
+          myKPA500.oldBand = ''
+          myKPA500.actBand = ''
+          myKPA500.OperStat = False
+          myKPA500.OldOperStat = False
+          myTRX.bandChange = True
+          
+          time.sleep(1)
+          
+      time.sleep(5/1000)
+
+# Loop until event is sent - third thread - read all status
+
+  def run_in_thread3(event):
+      
+    while not event.is_set():
+      if myKPA500.KPA500_ready:
 
 # Look for the temp
 
@@ -472,40 +517,12 @@ if __name__ == '__main__':
           else:
             ActBandLabel.configure(foreground='black')
             ActBand1Label.configure(foreground='black')
-
-# We assume the else part as the PA is switched off
-
       else:
-          myKPA500.KPA500_ready=False
-          myKPA500.OperStat=False
-          OnButton.configure(background=DefaultBtnColor,foreground='black')
-          OnButton.config(activebackground=OnButton.cget('background'))
-          OnButton.config(activeforeground=OnButton.cget('foreground'))
-          OperButton.configure(background=DefaultBtnColor,foreground='black')
-          OperButton.config(activebackground=OperButton.cget('background'))
-          OperButton.config(activeforeground=OperButton.cget('foreground'))
-          StbyButton.configure(background=DefaultBtnColor,foreground='black')
-          StbyButton.config(activebackground=StbyButton.cget('background'))
-          TempValue.configure(text = '-')
-          VoltValue.configure(text = '-')
-          AmpValue.configure(text = '-')
-          FWValue.configure(text = '-')
-          SerNValue.configure(text = '-')
-          ActBand1Label.configure(text = '-')
+          pass
 
-# Do the next part because after switch off and on the band of the PA is reset
-# to 10 MHz and not switched to the right band otherwise
+      time.sleep(100/1000)
 
-          myKPA500.oldBand = ''
-          myKPA500.actBand = ''
-          myKPA500.OperStat = False
-          myKPA500.OldOperStat = False
-          myTRX.bandChange = True
-          
-          time.sleep(1)
-          
-      time.sleep(5/1000)
-   
+
 # prepare the event for stopping the background threads
 
   stop_event = threading.Event() 
@@ -515,6 +532,9 @@ if __name__ == '__main__':
   
   thread2 = threading.Thread(target=run_in_thread2, args=(stop_event,), daemon=True)
   thread2.start()
+  
+  thread3 = threading.Thread(target=run_in_thread3, args=(stop_event,), daemon=True)
+  thread3.start()
   
   root.mainloop()
 

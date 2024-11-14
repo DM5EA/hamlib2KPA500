@@ -5,7 +5,7 @@ from tkinter import *
 
 # Class to handle all configuration parameters 
 
-# Important: The order of key value pairs in PWRperBand array must much the order 
+# Important: The order of key value pairs in PWRperBand array must match the order 
 #            of the scale widgets in the bandPWRBox array
 
 class ProgConfig:
@@ -18,7 +18,8 @@ class ProgConfig:
 
 # Define input power per band
 
-    self.PWRperBand = {'80 m ': 30, 
+    self.PWRperBand = {'160 m ': 25,
+                       '80 m ': 30, 
                        '40 m ': 30, 
                        '30 m ': 19, 
                        '20 m ': 35, 

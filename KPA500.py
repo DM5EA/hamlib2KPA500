@@ -1,5 +1,6 @@
 import serial
 import time
+import threading
 
 # Deamon mode: This class is ready
 
@@ -57,6 +58,10 @@ class KPA500:
     self.oldBN = ''
     self.actBN = ''
 
+# Use lock to make the access to the COM port thread save
+
+    self.lock = threading.Lock()
+
   def __str__(self):
     return f"KPA500"
     
@@ -73,7 +78,9 @@ class KPA500:
     print("KPA500 closed")
     
   def switchON(self):
+    self.lock.acquire()
     self.ser.write(self.OnCMD.encode('utf-8'))
+    self.lock.release()
     time.sleep(2)
 #    print('war im switchON')
     self.oldBN = ''
@@ -83,8 +90,10 @@ class KPA500:
     self.ser.write(cmd.encode('utf-8'))
     
   def getValue(self,cmd):
+    self.lock.acquire()
     self.sendCMD(cmd)
     resp = self.ser.read_until(expected=b';')
+    self.lock.release()
     return resp.decode()
     
   def setFanSpeed(self,speed):
@@ -92,7 +101,9 @@ class KPA500:
       cmd = self.FNCMD + str(speed) + ';'
     except:
       pass
+    self.lock.acquire()
     self.sendCMD(cmd)
+    self.lock.release()
   
   def getFanSpeed(self):
     cmd = self.FNCMD  + ';'
