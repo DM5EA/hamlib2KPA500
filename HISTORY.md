@@ -1,3 +1,8 @@
+### Version 0.1.7 (2024-11-14)
+- Added 160 m to config file and config window
+- Changed internal distribution of hanndling thr GUI elements in different threads
+- Made the serial communication towards the KPA500 thread save
+
 ### Version 0.1.6 (2024-11-07)
 - Added an app icon
 
