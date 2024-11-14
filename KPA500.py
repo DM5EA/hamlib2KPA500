@@ -1,6 +1,6 @@
 import serial
 import time
-import threading
+import threading    # Needed for threat save locking the com port operations
 
 # Deamon mode: This class is ready
 
@@ -43,9 +43,9 @@ class KPA500:
     self.FLCMD = '^FL;'         # Get the fault info
     self.FLresetCMD = '^FLC;'   # Reset fault
     self.FNCMD = '^FC'          # Get/Set minimum fan speed
-    self.BNCMD = '^BN;'
+    self.BNCMD = '^BN;'         # Get the current band
  
-    self.KPA500_ready = False
+    self.KPA500_ready = False   # Shows, if the KPA500 is switched on
     self.OperStat = False       # Shows, if KPA500 is in Oper status
                                 # Used to reduce the power of TRX
     self.OldOperStat = False
@@ -82,7 +82,6 @@ class KPA500:
     self.ser.write(self.OnCMD.encode('utf-8'))
     self.lock.release()
     time.sleep(2)
-#    print('war im switchON')
     self.oldBN = ''
     self.actBN = ''
     

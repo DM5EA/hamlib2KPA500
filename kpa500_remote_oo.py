@@ -71,7 +71,7 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.1.7'
+  version = '0.1.7.1'
   
   myConfig = ProgConfig.ProgConfig()
  
@@ -88,9 +88,6 @@ if __name__ == '__main__':
       myConfig.confFileName = arg
 
   myConfig.readConfig()
-  
-  QRG = ''
-  iQRG = 0
 
 # Initialize TRX connection
 
@@ -293,8 +290,6 @@ if __name__ == '__main__':
 # V 0.1.4 - Skip this if no TRX is present (KPA500 remote control only)
 
   def run_in_thread1(event):
-    global QRG
-    global iQRG
 
     while not event.is_set():
       
@@ -302,10 +297,7 @@ if __name__ == '__main__':
 
       if myTRX.bandChanged():
         if myKPA500.KPA500_ready: 
-          myLock = threading.Lock()
-          myLock.acquire()
           myKPA500.sendCMD((myKPA500.bandToCommand(newBand)))
-          myLock.release()
           myKPA500.OperStat = False              # As per config of the KPA500 after band change it is set to STBY
           myTRX.ackBandChange()                  # |--> We set this explicit here to avoid problems in PWR handling
         ActBandLabel.configure(text = newBand)   # |--> The other thread might read to changed Oper State to late
