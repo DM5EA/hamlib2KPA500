@@ -71,7 +71,7 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.1.7.1'
+  version = '0.1.7.2'
   
   myConfig = ProgConfig.ProgConfig()
  
