@@ -71,7 +71,7 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.1.7.2'
+  version = '0.1.8'
   
   myConfig = ProgConfig.ProgConfig()
  
@@ -287,7 +287,6 @@ if __name__ == '__main__':
   root.title("KPA500 Remote V " + version + " © DM5EA")
 
 # Loop until event is sent - frist thread - handle band changes
-# V 0.1.4 - Skip this if no TRX is present (KPA500 remote control only)
 
   def run_in_thread1(event):
 
@@ -341,14 +340,12 @@ if __name__ == '__main__':
     while not event.is_set():
 
 # Read and display the current putput power and SWR
+
       Sresp = myKPA500.getValue(myKPA500.PwrCMD)
 #      print(Sresp)
 #      print(KPA500_ready)
       if Sresp[1:3] == 'WS' and Sresp[3:6] != ';':    # Second part checks, if the PA is really on
           myKPA500.KPA500_ready=True
-          OnButton.configure(background='green',foreground='white')      # PA is on
-          OnButton.config(activebackground=OnButton.cget('background'))  # set the button
-          OnButton.config(activeforeground=OnButton.cget('foreground'))
           pwr = Sresp[3:6]
           try:
             ipwr = int(pwr)
@@ -390,38 +387,14 @@ if __name__ == '__main__':
           Sresp = myKPA500.getValue(myKPA500.OSCMD)
           if Sresp[3:4] == '1':
             myKPA500.OperStat=True
-            OperButton.configure(background='green',foreground='white')
-            OperButton.config(activebackground=OperButton.cget('background'))
-            OperButton.config(activeforeground=OperButton.cget('foreground'))
-            StbyButton.configure(background=DefaultBtnColor)
-            StbyButton.config(activebackground=StbyButton.cget('background'))
           else:
             myKPA500.OperStat=False
-            OperButton.configure(background=DefaultBtnColor,foreground='black')
-            OperButton.config(activebackground=OperButton.cget('background'))
-            OperButton.config(activeforeground=OperButton.cget('foreground'))
-            StbyButton.configure(background='orange')
-            StbyButton.config(activebackground=StbyButton.cget('background'))
 
 # We assume the else part as the PA is switched off
 
       else:
           myKPA500.KPA500_ready=False
           myKPA500.OperStat=False
-          OnButton.configure(background=DefaultBtnColor,foreground='black')
-          OnButton.config(activebackground=OnButton.cget('background'))
-          OnButton.config(activeforeground=OnButton.cget('foreground'))
-          OperButton.configure(background=DefaultBtnColor,foreground='black')
-          OperButton.config(activebackground=OperButton.cget('background'))
-          OperButton.config(activeforeground=OperButton.cget('foreground'))
-          StbyButton.configure(background=DefaultBtnColor,foreground='black')
-          StbyButton.config(activebackground=StbyButton.cget('background'))
-          TempValue.configure(text = '-')
-          VoltValue.configure(text = '-')
-          AmpValue.configure(text = '-')
-          FWValue.configure(text = '-')
-          SerNValue.configure(text = '-')
-          ActBand1Label.configure(text = '-')
 
 # Do the next part because after switch off and on the band of the PA is reset
 # to 10 MHz and not switched to the right band otherwise
@@ -436,12 +409,29 @@ if __name__ == '__main__':
           
       time.sleep(5/1000)
 
-# Loop until event is sent - third thread - read all status
+# Loop until event is sent - third thread - read all status - handle GUI elements
 
   def run_in_thread3(event):
       
     while not event.is_set():
       if myKPA500.KPA500_ready:
+
+          OnButton.configure(background='green',foreground='white')      # PA is on
+          OnButton.config(activebackground=OnButton.cget('background'))  # set the button
+          OnButton.config(activeforeground=OnButton.cget('foreground'))
+          
+          if myKPA500.OperStat:
+            OperButton.configure(background='green',foreground='white')
+            OperButton.config(activebackground=OperButton.cget('background'))
+            OperButton.config(activeforeground=OperButton.cget('foreground'))
+            StbyButton.configure(background=DefaultBtnColor)
+            StbyButton.config(activebackground=StbyButton.cget('background'))
+          else:
+            OperButton.configure(background=DefaultBtnColor,foreground='black')
+            OperButton.config(activebackground=OperButton.cget('background'))
+            OperButton.config(activeforeground=OperButton.cget('foreground'))
+            StbyButton.configure(background='orange')
+            StbyButton.config(activebackground=StbyButton.cget('background'))
 
 # Look for the temp
 
@@ -510,7 +500,20 @@ if __name__ == '__main__':
             ActBandLabel.configure(foreground='black')
             ActBand1Label.configure(foreground='black')
       else:
-          pass
+          OnButton.configure(background=DefaultBtnColor,foreground='black')
+          OnButton.config(activebackground=OnButton.cget('background'))
+          OnButton.config(activeforeground=OnButton.cget('foreground'))
+          OperButton.configure(background=DefaultBtnColor,foreground='black')
+          OperButton.config(activebackground=OperButton.cget('background'))
+          OperButton.config(activeforeground=OperButton.cget('foreground'))
+          StbyButton.configure(background=DefaultBtnColor,foreground='black')
+          StbyButton.config(activebackground=StbyButton.cget('background'))
+          TempValue.configure(text = '-')
+          VoltValue.configure(text = '-')
+          AmpValue.configure(text = '-')
+          FWValue.configure(text = '-')
+          SerNValue.configure(text = '-')
+          ActBand1Label.configure(text = '-')
 
       time.sleep(100/1000)
 
