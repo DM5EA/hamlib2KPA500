@@ -1,3 +1,6 @@
+### Version 0.1.8 (2024-11-15)
+- Some reorgs between the different threads
+
 ### Version 0.1.7 (2024-11-14)
 - Added 160 m to config file and config window
 - Changed internal distribution of hanndling thr GUI elements in different threads
