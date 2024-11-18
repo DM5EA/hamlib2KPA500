@@ -1,3 +1,6 @@
+### Version 0.1.9 (2024-11-18)
+- Added check, that avoids OPER state if TRX PWR > 39 W
+
 ### Version 0.1.8 (2024-11-15)
 - Some reorgs between the different threads
 
