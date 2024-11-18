@@ -160,7 +160,15 @@ class KPA500:
       return BN 
 
   def ResetFault(self):
+    self.lock.acquire()
     self.sendCMD(self.FLresetCMD)
+    self.lock.release()
+   
+  def setKP500toSTBY(self):
+    self.lock.acquire()
+    self.sendCMD(self.StbyCMD)
+    self.lock.release()
+    
     
   
   

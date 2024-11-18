@@ -71,7 +71,7 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.1.8'
+  version = '0.1.9'
   
   myConfig = ProgConfig.ProgConfig()
  
@@ -324,10 +324,15 @@ if __name__ == '__main__':
       
       if myKPA500.OperStat:
         myConfig.setPWRSliderForBand(newBand, TRXActPWR)
-        if TRXActPWR > 37:
+        if TRXActPWR > 39:
           TRXPWRLevel.configure(foreground='red')
+          myKPA500.setKP500toSTBY()
+        elif TRXActPWR > 37:
+          TRXPWRLevel.configure(foreground='yellow')
         else:
           TRXPWRLevel.configure(foreground='green')
+      else:
+        TRXPWRLevel.configure(foreground='green')
 
 # Redo until here (sometime)
 
