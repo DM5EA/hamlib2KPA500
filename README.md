@@ -26,5 +26,5 @@ Current limitations:
 
 Below there is a screen shot of both windows.
 
-![]()<img src=kpa500_remote.0.1.1.jpeg width=550>
+![]()<img src=kpa500_remote.0.2.0.jpeg width=550>
 
