@@ -71,7 +71,7 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.1.9'
+  version = '0.2.0'
   
   myConfig = ProgConfig.ProgConfig()
  
@@ -264,16 +264,16 @@ if __name__ == '__main__':
 
 # All the buttons
 
-  OperButton = Button(bottomframe, text = 'Oper', command = lambda: myKPA500.sendCMD(myKPA500.OperCMD), width = 6, bg='green') 
+  OperButton = Button(bottomframe, text = 'Oper', command = lambda: myKPA500.setKP500toOPER(), width = 6, bg='green') 
   OperButton.pack(padx=3, side=LEFT)
 
-  StbyButton = Button(bottomframe, text = 'Stby', command = lambda: myKPA500.sendCMD(myKPA500.StbyCMD), width = 6, bg='orange') 
+  StbyButton = Button(bottomframe, text = 'Stby', command = lambda: myKPA500.setKP500toSTBY(), width = 6, bg='orange') 
   StbyButton.pack(padx=3, side=LEFT)
 
   OnButton = Button(bottomframe, text = 'On', command = lambda: myKPA500.switchON(), width = 6, bg='green') 
   OnButton.pack(padx=3, side=LEFT)
 
-  OffButton = Button(bottomframe, text = 'Off', command = lambda: myKPA500.sendCMD(myKPA500.OffCMD), width = 6) 
+  OffButton = Button(bottomframe, text = 'Off', command = lambda: myKPA500.switchOFF(), width = 6) 
   OffButton.pack(padx=3, side=LEFT)
 
   ConfigButton = Button(bottomframe, text = 'Settings', command = lambda: myConfig.openConfigWindow(root), width = 6) 

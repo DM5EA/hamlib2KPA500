@@ -85,6 +85,11 @@ class KPA500:
     self.oldBN = ''
     self.actBN = ''
     
+  def switchOFF(self):
+    self.lock.acquire()
+    self.sendCMD(self.OffCMD)
+    self.lock.release()
+
   def sendCMD(self,cmd):
     self.ser.write(cmd.encode('utf-8'))
     
@@ -169,6 +174,11 @@ class KPA500:
     self.sendCMD(self.StbyCMD)
     self.lock.release()
     
+  def setKP500toOPER(self):
+    self.lock.acquire()
+    self.sendCMD(self.OperCMD)
+    self.lock.release()
+
     
   
   
