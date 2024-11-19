@@ -1,3 +1,6 @@
+### Version 0.2.0 (2024-11-19)
+- Minor changes in KPA500 operation status handling
+
 ### Version 0.1.9 (2024-11-18)
 - Added check, that avoids OPER state if TRX PWR > 39 W
 
