@@ -1,3 +1,7 @@
+### Version 0.2.2 (2024-11-22)
+- Changed how to check if the settings window is open
+- Changed handling of band changes. It sometimes hapened, that the TRX PWR was not set correct after band changes.
+
 ### Version 0.2.0 (2024-11-19)
 - Minor changes in KPA500 operation status handling
 
