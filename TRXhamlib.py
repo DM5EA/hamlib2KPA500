@@ -1,6 +1,7 @@
 import socket
 import sys
 import Hamlib
+import threading
 
 class TRXhamlib:
   def __init__(self,connstring,rigmodel):
@@ -16,6 +17,8 @@ class TRXhamlib:
     self.bandChange = True
     
     Hamlib.rig_set_debug(Hamlib.RIG_DEBUG_NONE)
+
+    self.lock = threading.Lock()
 
   def __str__(self):
     return f"TRXhamlib"
@@ -42,13 +45,19 @@ class TRXhamlib:
     print("TRX closed")
         
   def getInitialPWR(self):
+    self.lock.acquire()
     self.initialPWR = self.myHamlib.get_level_f(Hamlib.RIG_LEVEL_RFPOWER)
+    self.lock.release()
 
   def restoreInitialPWR(self):
+    self.lock.acquire()
     self.myHamlib.set_level(Hamlib.RIG_LEVEL_RFPOWER,  self.initialPWR)
+    self.lock.release()
     
   def getTXPWR(self):
+    self.lock.acquire()
     resp = self.myHamlib.get_level_f(Hamlib.RIG_LEVEL_RFPOWER)
+    self.lock.release()
     fPWR = 0
     try:
       fPWR = int(float(resp) * 100.)+1
@@ -63,11 +72,15 @@ class TRXhamlib:
       npwr = float(pwr) / 100.
     except:
       pass
+    self.lock.acquire()
     self.myHamlib.set_level(Hamlib.RIG_LEVEL_RFPOWER, npwr)
+    self.lock.release()
     pass  
   
   def getActBand(self):
+    self.lock.acquire()
     qrg = self.myHamlib.get_freq()
+    self.lock.release()
     iqrg = int(qrg)
     band = ''
     if iqrg >= 1810000 and iqrg <= 2000000:

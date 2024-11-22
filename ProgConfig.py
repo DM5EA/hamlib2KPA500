@@ -36,7 +36,9 @@ class ProgConfig:
     
     self.hamlibContext = None
     self.KPA500Context = None
-    self.windowOpen = False
+    
+  def __str__(self):
+    return f"ProgConfig"
 
 # Read the config from file (confFileName is a variable of this class)
 
@@ -78,7 +80,7 @@ class ProgConfig:
 
   def openConfigWindow(self,rootWindow):
 
-    if not self.windowOpen:
+    if self.ConfigWindow == None:
       self.ConfigWindow = Toplevel()
       self.ConfigWindow.title("Settings")
       self.ConfigWindow.config(width=550, height=320)
@@ -149,9 +151,7 @@ class ProgConfig:
         width = 6
       )
       CloseButton.grid(row=12, column=4, columnspan=1, padx=1, pady=5)
-    
-      self.windowOpen = True
-
+      
 # Handle the default close window button 
 
       self.ConfigWindow.protocol("WM_DELETE_WINDOW", self.closeWindow)
@@ -159,8 +159,8 @@ class ProgConfig:
 # Close window
 
   def closeWindow(self):
-    self.windowOpen = False
     self.ConfigWindow.destroy()
+    self.ConfigWindow = None
   
 # Store the settings - limited currently to the power per band
 
@@ -196,7 +196,7 @@ class ProgConfig:
     for key, value in self.PWRperBand.items():
       if band == key:
         self.PWRperBand[key] = pwr
-        if self.windowOpen:
+        if self.ConfigWindow != None:
           self.bandPWRBox[i].set(pwr)
           self.bandWattLabel[i].configure(text = str(self.bandPWRBox[i].get()-1) + ' W')
 

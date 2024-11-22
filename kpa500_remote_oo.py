@@ -71,7 +71,7 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.2.0'
+  version = '0.2.2'
   
   myConfig = ProgConfig.ProgConfig()
  
@@ -286,12 +286,15 @@ if __name__ == '__main__':
   
   root.title("KPA500 Remote V " + version + " © DM5EA")
 
-# Loop until event is sent - frist thread - handle band changes
+# Loop until event is sent - frist thread - handle band changes and OperState changes
 
   def run_in_thread1(event):
 
     while not event.is_set():
       
+#      tempLock = threading.Lock()           # This locking is essential. It otherwise may happen, that we switch
+#      tempLock.acquire()                    # to the PWR stored as the initial PWR (STBY state)
+
       newBand = myTRX.getActBand()
 
       if myTRX.bandChanged():
@@ -306,7 +309,7 @@ if __name__ == '__main__':
 # BUT: We might want to redo this part as it is a bit ugly
  
       if myKPA500.OldOperStat != myKPA500.OperStat:
-        if myKPA500.OperStat:
+        if myKPA500.OperStat:                    
           myTRX.getInitialPWR()
           try:
             newPWR = myConfig.PWRperBand[newBand]
@@ -333,6 +336,8 @@ if __name__ == '__main__':
           TRXPWRLevel.configure(foreground='green')
       else:
         TRXPWRLevel.configure(foreground='green')
+
+#      tempLock.release()
 
 # Redo until here (sometime)
 
