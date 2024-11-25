@@ -1,3 +1,6 @@
+### Version 0.2.3 (2024-11-25)
+- Changed handling if the oper state changes. Avoid wrong PWR settings this way.
+
 ### Version 0.2.2 (2024-11-22)
 - Changed how to check if the settings window is open
 - Changed handling of band changes. It sometimes hapened, that the TRX PWR was not set correct after band changes.
