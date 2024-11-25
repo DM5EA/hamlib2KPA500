@@ -71,7 +71,7 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.2.2'
+  version = '0.2.3'
   
   myConfig = ProgConfig.ProgConfig()
  
@@ -292,8 +292,8 @@ if __name__ == '__main__':
 
     while not event.is_set():
       
-#      tempLock = threading.Lock()           # This locking is essential. It otherwise may happen, that we switch
-#      tempLock.acquire()                    # to the PWR stored as the initial PWR (STBY state)
+      tempLock = threading.Lock()           # This locking is essential. It otherwise may happen, that we switch
+      tempLock.acquire()                    # to the PWR stored as the initial PWR (STBY state)
 
       newBand = myTRX.getActBand()
 
@@ -336,8 +336,17 @@ if __name__ == '__main__':
           TRXPWRLevel.configure(foreground='green')
       else:
         TRXPWRLevel.configure(foreground='green')
+ 
+# Now read the operating state
 
-#      tempLock.release()
+      if myKPA500.KPA500_ready:
+        Sresp = myKPA500.getValue(myKPA500.OSCMD)
+        if Sresp[3:4] == '1':
+          myKPA500.OperStat=True
+        else:
+          myKPA500.OperStat=False
+
+      tempLock.release()
 
 # Redo until here (sometime)
 
@@ -391,14 +400,6 @@ if __name__ == '__main__':
             SwrCanvas.coords(SwrRedRect, 120, 0, x1, 20)
           else:
             SwrCanvas.coords(SwrRedRect, 120, 0, 120, 20)
- 
-# Now read the operating state
-
-          Sresp = myKPA500.getValue(myKPA500.OSCMD)
-          if Sresp[3:4] == '1':
-            myKPA500.OperStat=True
-          else:
-            myKPA500.OperStat=False
 
 # We assume the else part as the PA is switched off
 
