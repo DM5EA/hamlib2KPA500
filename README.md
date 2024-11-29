@@ -18,7 +18,6 @@ Prerequisites:
 - hamlib python modul installed, for example:  ```sudo apt-get install python3-hamlib```
 - KPA500 connected to the computer running the script via serial interface
 - TRX connected either via a rigctld on another computer in the network or via USB/serial interface to the computer running the script
-- KPA500 needs to be configured in a way that it changes to STBY mode on band change. Otherwise the power handling of the TRX does not work. See issue https://github.com/DM5EA/hamlib2KPA500/issues/15
 
 Current limitations:
 - This script DOES NOT update the band information FROM the KPA500 towards the TRX.
