@@ -1,9 +1,9 @@
 # hamlib2KPA500
 
-This project started when I obtained an used KPA500 and thought about how to control it remote. I already own an ICOM 7610 
+This project started when I obtained an used elecraft KPA500 and thought about how to control it remote. I already own an ICOM 7610 
 which is a perfect remote able radio using SDR-Control.
 
-So based on this I started this python project. In my case the KPA500 and the ICOM 7610 are connected to a Rasperry 4. The script
+So based on this I started this python project. In my case the elecraft KPA500 and the ICOM 7610 are connected to a Rasperry 4. The script
 runs on this Raspberry and via RVNC I'm able to control the KPA500 from remote. As I'm using the hamlib python modul to read the 
 frequency from the TRX (and control its output power) this solution should work with every other TRX hamlib is able to control.
 
