@@ -71,7 +71,7 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.2.3'
+  version = '0.2.4'
   
   myConfig = ProgConfig.ProgConfig()
  
@@ -108,12 +108,20 @@ if __name__ == '__main__':
 # Build the main window
 
   root = Tk()
-  root.geometry("550x320")     # Build the root TK element 
-  root.resizable(False, False)
+  #root.geometry("700x500")     # Build the root TK element 
+  #root.resizable(False, False)
+  root.attributes('-fullscreen',True)
+  root.configure(bg=myConfig.BGC)
 
   appDir = os.path.dirname(__file__)
   photo = PhotoImage(file = appDir + '/kpa500_remote_ico.png')
   root.wm_iconphoto(True, photo)
+
+# Default font size
+
+  import tkinter.font as tkFont
+  def_font = tkFont.nametofont("TkDefaultFont")
+  def_font.config(size=22)
 
 #  print(root.wm_sizefrom())
   
@@ -122,58 +130,58 @@ if __name__ == '__main__':
 
 # Frame for band info
 
-  topBandframe = Frame(root,  highlightbackground="blue", highlightthickness=1)
-  topBandframe.pack(pady=5,side=TOP)
+  topBandframe = Frame(root,  highlightbackground="blue", highlightthickness=2, bg=myConfig.BGC)
+  topBandframe.pack(pady=30,side=TOP)
 
 # Frame to show the power level
 
-  topPWRframe = Frame(root)
-  topPWRframe.pack(pady=2,side=TOP)
+  topPWRframe = Frame(root, bg=myConfig.BGC)
+  topPWRframe.pack(pady=3,side=TOP)
   
 # Frame to show the SWR
 
-  topSWRframe = Frame(root)
-  topSWRframe.pack(pady=2,side=TOP)
+  topSWRframe = Frame(root, bg=myConfig.BGC)
+  topSWRframe.pack(pady=3,side=TOP)
 
 # Frame to show the current values
 
-  topValuesframe = Frame(root, highlightbackground="orange", highlightthickness=1)
-  topValuesframe.pack(pady=2,side=TOP)
+  topValuesframe = Frame(root, highlightbackground="orange", highlightthickness=2,bg=myConfig.BGC)
+  topValuesframe.pack(pady=3,side=TOP)
 
 # Frame to show fault info
   
-  topFaultframe = Frame(root, highlightbackground="red", highlightthickness=1)
-  topFaultframe.pack(pady=2,side=TOP)
+  topFaultframe = Frame(root, highlightbackground="red", highlightthickness=2, bg=myConfig.BGC)
+  topFaultframe.pack(pady=3,side=TOP)
 
 # Frame to show FW rev and ser no
 
-  topFWframe = Frame(root, highlightbackground="orange", highlightthickness=1)
-  topFWframe.pack(pady=2,side=TOP)
+  topFWframe = Frame(root, highlightbackground="orange", highlightthickness=2, bg=myConfig.BGC)
+  topFWframe.pack(pady=3,side=TOP)
 
 # Frame to show TRX actual PWR set
 
-  topTRXPWRframe = Frame(root, highlightbackground="orange", highlightthickness=1)
-  topTRXPWRframe.pack(pady=2,side=TOP)
+  topTRXPWRframe = Frame(root, highlightbackground="orange", highlightthickness=2, bg=myConfig.BGC)
+  topTRXPWRframe.pack(pady=3,side=TOP)
 
 # Frame to show fan control
 
-  topFANCTRLframe = Frame(root, highlightbackground="orange", highlightthickness=1)
-  topFANCTRLframe.pack(pady=2,side=TOP)
+  topFANCTRLframe = Frame(root, highlightbackground="orange", highlightthickness=2, bg=myConfig.BGC)
+  topFANCTRLframe.pack(pady=3,side=TOP)
 
 # Bottom frame for all buttons
 
-  bottomframe = Frame(root)
-  bottomframe.pack(pady=3,side=BOTTOM)
+  bottomframe = Frame(root, bg=myConfig.BGC)
+  bottomframe.pack(pady=20,side=TOP)
 
 # Now place all elements in the frames
 
-  BandLabel = Label(topBandframe, text = " Band (TRX): ", bg='yellow2')
+  BandLabel = Label(topBandframe, text = " Band (TRX): ", bg='orange')
   BandLabel.pack(side=LEFT)
-  ActBandLabel = Label(topBandframe, text = '', bg='yellow2')
+  ActBandLabel = Label(topBandframe, text = '', bg='orange')
   ActBandLabel.pack(side=LEFT)
-  Band1Label = Label(topBandframe, text = " Band (KPA500): ", bg='yellow2')
+  Band1Label = Label(topBandframe, text = " Band (KPA500): ", bg='orange')
   Band1Label.pack(side=LEFT)
-  ActBand1Label = Label(topBandframe, text = '', bg='yellow2')
+  ActBand1Label = Label(topBandframe, text = '', bg='orange')
   ActBand1Label.pack(side=LEFT)
 
 # Define the canvas for power level display.
@@ -181,105 +189,110 @@ if __name__ == '__main__':
 # Similary for the SWR
 # Later we change the size of the rectangles according to the measured levels
 
-  PwrLabel = Label(topPWRframe, text = "PWR ")
+  PwrLabel = Label(topPWRframe, text = "PWR ", fg = myConfig.FGC, bg=myConfig.BGC)
   PwrLabel.pack(padx=1,side=LEFT)
-  PwrCanvas = Canvas(topPWRframe, bg='whitesmoke', width=460, height=20)
-  PwrGreenRect = PwrCanvas.create_rectangle(0,0,0,20,fill='green',outline='green')
-  PwrYellowRect = PwrCanvas.create_rectangle(368,0,368,20,fill='orange',outline='orange')
-  PwrRedRect = PwrCanvas.create_rectangle(414,0,414,20,fill='red',outline='red')
+#  PwrCanvas = Canvas(topPWRframe, bg='whitesmoke', width=460, height=myConfig.BarHeight)
+  PwrCanvas = Canvas(topPWRframe, bg=myConfig.BGC, width=460, height=myConfig.BarHeight)
+  PwrGreenRect = PwrCanvas.create_rectangle(0,0,0,myConfig.BarHeight,fill='green',outline='green')
+  PwrYellowRect = PwrCanvas.create_rectangle(368,0,368,myConfig.BarHeight,fill='orange',outline='orange')
+  PwrRedRect = PwrCanvas.create_rectangle(414,0,414,myConfig.BarHeight,fill='red',outline='red')
   PwrCanvas.pack(side=LEFT)
 
-  SwrLabel = Label(topSWRframe, text = "SWR ")
+  SwrLabel = Label(topSWRframe, text = "SWR ", fg = myConfig.FGC, bg=myConfig.BGC)
   SwrLabel.pack(padx=1,side=LEFT)
-  SwrCanvas = Canvas(topSWRframe, bg='whitesmoke', width=200, height=20)
-  SwrGreenRect = SwrCanvas.create_rectangle(0,0,0,20,fill='green',outline='green')
-  SwrYellowRect = SwrCanvas.create_rectangle(80,0,80,20,fill='orange',outline='orange')
-  SwrRedRect = SwrCanvas.create_rectangle(120,0,120,20,fill='red',outline='red')
+  SwrCanvas = Canvas(topSWRframe, bg=myConfig.BGC, width=200, height=myConfig.BarHeight)
+  SwrGreenRect = SwrCanvas.create_rectangle(0,0,0,myConfig.BarHeight,fill='green',outline='green')
+  SwrYellowRect = SwrCanvas.create_rectangle(80,0,80,myConfig.BarHeight,fill='orange',outline='orange')
+  SwrRedRect = SwrCanvas.create_rectangle(120,0,120,myConfig.BarHeight,fill='red',outline='red')
   SwrCanvas.pack(side=LEFT)
 
 # Current values of the PA
 
-  TempLabel = Label(topValuesframe, text = " Temp ")
+  TempLabel = Label(topValuesframe, text = " Temp ", fg = myConfig.FGC, bg=myConfig.BGC)
   TempLabel.pack(padx=1,side=LEFT)
-  TempValue = Label(topValuesframe, text = "-", width=3)
+  TempValue = Label(topValuesframe, text = "-", width=3, fg = myConfig.FGC, bg=myConfig.BGC)
   TempValue.pack(padx=1,side=LEFT)
-  CelsLabel = Label(topValuesframe, text = " C  |  ")
+  CelsLabel = Label(topValuesframe, text = " C  |  ", fg = myConfig.FGC, bg=myConfig.BGC)
   CelsLabel.pack(padx=1,side=LEFT)
 
-  VoltLabel = Label(topValuesframe, text = "HV ")
+  VoltLabel = Label(topValuesframe, text = "HV ", fg = myConfig.FGC, bg=myConfig.BGC)
   VoltLabel.pack(padx=1,side=LEFT)
-  VoltValue = Label(topValuesframe, text = "-", width=3)
+  VoltValue = Label(topValuesframe, text = "-", width=3, fg = myConfig.FGC, bg=myConfig.BGC)
   VoltValue.pack(padx=1,side=LEFT)
-  VLabel = Label(topValuesframe, text = " V   |  ")
+  VLabel = Label(topValuesframe, text = " V   |  ", fg = myConfig.FGC, bg=myConfig.BGC)
   VLabel.pack(padx=1,side=LEFT)
 
-  AmpLabel = Label(topValuesframe, text = "Cur ")
+  AmpLabel = Label(topValuesframe, text = "Cur ", fg = myConfig.FGC, bg=myConfig.BGC)
   AmpLabel.pack(padx=1,side=LEFT)
-  AmpValue = Label(topValuesframe, text = "-", width=3)
+  AmpValue = Label(topValuesframe, text = "-", width=3, fg = myConfig.FGC, bg=myConfig.BGC)
   AmpValue.pack(padx=1,side=LEFT)
-  ALabel = Label(topValuesframe, text = " A ")
+  ALabel = Label(topValuesframe, text = " A ", fg = myConfig.FGC, bg=myConfig.BGC)
   ALabel.pack(padx=1,side=LEFT)
 
-  FWLabel = Label(topFWframe, text = " FW Rev ")
+  FWLabel = Label(topFWframe, text = " FW Rev ", fg = myConfig.FGC, bg=myConfig.BGC)
   FWLabel.pack(padx=1,side=LEFT)
-  FWValue = Label(topFWframe, text = "-")
+  FWValue = Label(topFWframe, text = "-", fg = myConfig.FGC, bg=myConfig.BGC)
   FWValue.pack(padx=1,side=LEFT)
 
-  SerNLabel = Label(topFWframe, text = "  |  Ser # ")
+  SerNLabel = Label(topFWframe, text = "  |  Ser # ", fg = myConfig.FGC, bg=myConfig.BGC)
   SerNLabel.pack(padx=1,side=LEFT)
-  SerNValue = Label(topFWframe, text = "-")
+  SerNValue = Label(topFWframe, text = "-", fg = myConfig.FGC, bg=myConfig.BGC)
   SerNValue.pack(padx=1,side=LEFT)
 
 # Fault display
 
-  FaultLabel = Label(topFaultframe, text = " Fault: ")
+  innerFaultframe = Frame(topFaultframe, bg=myConfig.BGC)
+  innerFaultframe.pack(side=TOP)
+
+  FaultLabel = Label(innerFaultframe, text = " Fault: ", fg = myConfig.FGC, bg=myConfig.BGC)
   FaultLabel.pack(padx=1,side=LEFT)
-  FaultNo = Label(topFaultframe, text = " 0 ")
+  FaultNo = Label(innerFaultframe, text = " 0 ", fg = myConfig.FGC, bg=myConfig.BGC)
   FaultNo.pack(padx=1,side=LEFT)
-  FaultText = Label(topFaultframe, text = " OK ", fg='green')
+  FaultText = Label(innerFaultframe, text = " OK ", fg='green', bg=myConfig.BGC)
   FaultText.pack(padx=1,side=LEFT)
   FaultResetButton = Button(topFaultframe, text = 'Reset', command = lambda: myKPA500.ResetFault(), width = 4) 
-  FaultResetButton.pack(padx=1, side=LEFT)
+  FaultResetButton.pack(padx=1, side=BOTTOM)
 
 # TRX PWR display
 
-  TRXPWRLabel = Label(topTRXPWRframe, text = " TRX PWR: ")
+  TRXPWRLabel = Label(topTRXPWRframe, text = " TRX PWR: ", fg='green', bg=myConfig.BGC)
   TRXPWRLabel.pack(padx=1,side=LEFT)
-  TRXPWRLevel = Label(topTRXPWRframe, text = " 0 ", fg='green')
+  TRXPWRLevel = Label(topTRXPWRframe, text = " 0 ", fg='green', bg=myConfig.BGC)
   TRXPWRLevel.pack(padx=1,side=LEFT)
-  TRXPWRUnit = Label(topTRXPWRframe, text = " W ", fg='green')
+  TRXPWRUnit = Label(topTRXPWRframe, text = " W ", fg='green', bg=myConfig.BGC)
   TRXPWRUnit.pack(padx=1,side=LEFT)
   
 # Fan control slider
 
-  FANLabel = Label(topFANCTRLframe, text = " Fan control ")
+  FANLabel = Label(topFANCTRLframe, text = " Fan control ", fg = myConfig.FGC, bg=myConfig.BGC)
   FANLabel.pack(padx=1,side=LEFT)
   FANCTRLSlider = Scale(topFANCTRLframe, 
-                        from_=0, to=6, 
+                        from_=0, to=6, showvalue = 0,
                         orient='horizontal', tickinterval=1, 
                         command = FANSpeed_Changed, 
-                        length = 300)
+                        length = 300,
+                        width = 30, fg = myConfig.FGC, bg=myConfig.BGC)
   FANCTRLSlider.set(myConfig.FanSpeed)
   FANCTRLSlider.pack(padx=1,side=LEFT)
 
 # All the buttons
 
-  OperButton = Button(bottomframe, text = 'Oper', command = lambda: myKPA500.setKP500toOPER(), width = 6, bg='green') 
+  OperButton = Button(bottomframe, text = 'Oper', command = lambda: myKPA500.setKP500toOPER(), width = 4, height = myConfig.ButtonHeight, bg='green') 
   OperButton.pack(padx=3, side=LEFT)
 
-  StbyButton = Button(bottomframe, text = 'Stby', command = lambda: myKPA500.setKP500toSTBY(), width = 6, bg='orange') 
+  StbyButton = Button(bottomframe, text = 'Stby', command = lambda: myKPA500.setKP500toSTBY(), width = 4, height = myConfig.ButtonHeight, bg='orange') 
   StbyButton.pack(padx=3, side=LEFT)
 
-  OnButton = Button(bottomframe, text = 'On', command = lambda: myKPA500.switchON(), width = 6, bg='green') 
+  OnButton = Button(bottomframe, text = 'On', command = lambda: myKPA500.switchON(), width = 4, height = myConfig.ButtonHeight, bg='green') 
   OnButton.pack(padx=3, side=LEFT)
 
-  OffButton = Button(bottomframe, text = 'Off', command = lambda: myKPA500.switchOFF(), width = 6) 
+  OffButton = Button(bottomframe, text = 'Off', command = lambda: myKPA500.switchOFF(), width = 4, height = myConfig.ButtonHeight ) 
   OffButton.pack(padx=3, side=LEFT)
 
-  ConfigButton = Button(bottomframe, text = 'Settings', command = lambda: myConfig.openConfigWindow(root), width = 6) 
+  ConfigButton = Button(bottomframe, text = 'Settings', command = lambda: myConfig.openConfigWindow(root), width = 6, height = myConfig.ButtonHeight ) 
   ConfigButton.pack(padx=3, side=LEFT)
   
-  ExitButton = Button(bottomframe, text = 'Exit', command = quit, width = 7) 
+  ExitButton = Button(bottomframe, text = 'Exit', command = quit, width = 5, height = myConfig.ButtonHeight) 
   ExitButton.pack(padx=3, side=LEFT)
 
   DefaultBtnColor = ExitButton.cget("background")
@@ -371,17 +384,17 @@ if __name__ == '__main__':
           except:
             pass
           x1 = min(ipwr, 500) * 0.736
-          PwrCanvas.coords(PwrGreenRect, 0, 0, x1, 20)
+          PwrCanvas.coords(PwrGreenRect, 0, 0, x1, myConfig.BarHeight)
           if ipwr > 500:
             x1 = 368 + (min(ipwr,650)-500) * 0.307
-            PwrCanvas.coords(PwrYellowRect, 368, 0, x1, 20)
+            PwrCanvas.coords(PwrYellowRect, 368, 0, x1, myConfig.BarHeight)
           else:
-            PwrCanvas.coords(PwrYellowRect, 368, 0, 368, 20)
+            PwrCanvas.coords(PwrYellowRect, 368, 0, 368, myConfig.BarHeight)
           if ipwr > 650:
             x1 = 414 + (ipwr-650) * 0.307
-            PwrCanvas.coords(PwrRedRect, 414, 0, x1, 20)
+            PwrCanvas.coords(PwrRedRect, 414, 0, x1, myConfig.BarHeight)
           else:
-            PwrCanvas.coords(PwrRedRect, 414, 0, 414, 20)
+            PwrCanvas.coords(PwrRedRect, 414, 0, 414, myConfig.BarHeight)
 
           swr = Sresp[7:10]
           try:
@@ -389,17 +402,17 @@ if __name__ == '__main__':
           except:
             pass
           x1 = min(iswr-10, 5) * 16
-          SwrCanvas.coords(SwrGreenRect, 0, 0, x1, 20)
+          SwrCanvas.coords(SwrGreenRect, 0, 0, x1, myConfig.BarHeight)
           if iswr > 15:
             x1 = 80 + (min(iswr,20)-15) * 8
-            SwrCanvas.coords(SwrYellowRect, 80, 0, x1, 20)
+            SwrCanvas.coords(SwrYellowRect, 80, 0, x1, myConfig.BarHeight)
           else:
-            SwrCanvas.coords(SwrYellowRect, 80, 0, 80, 20)
+            SwrCanvas.coords(SwrYellowRect, 80, 0, 80, myConfig.BarHeight)
           if iswr > 20:
             x1 = 120 + (iswr-20) * 2.67
-            SwrCanvas.coords(SwrRedRect, 120, 0, x1, 20)
+            SwrCanvas.coords(SwrRedRect, 120, 0, x1, myConfig.BarHeight)
           else:
-            SwrCanvas.coords(SwrRedRect, 120, 0, 120, 20)
+            SwrCanvas.coords(SwrRedRect, 120, 0, 120, myConfig.BarHeight)
 
 # We assume the else part as the PA is switched off
 
