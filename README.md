@@ -7,6 +7,13 @@ So based on this I started this python project. In my case the elecraft KPA500 a
 runs on this Raspberry and via RVNC I'm able to control the KPA500 from remote. As I'm using the hamlib python modul to read the 
 frequency from the TRX (and control its output power) this solution should work with every other TRX hamlib is able to control.
 
+The current implementation is fixed on a small display with 720x1560 connected directly to the Raspberry 4 HDMI. Nevertheless it can
+be used via RVNC as well. The window opened by the program is fullscreen. See photos below.
+
+More details about the display user may be fount here:
+
+https://www.waveshare.com/product/raspberry-pi/displays/lcd-oled/6.25inch-720x1560-lcd.htm
+
 By today the following functions are available:
 - Switch band of the KPA500 according to the frequency on the TRX
 - Store the power output of the TRX toward the KPA500 on a band basis
@@ -23,7 +30,9 @@ Current limitations:
 - This script DOES NOT update the band information FROM the KPA500 towards the TRX.
 - The script is tested on LinuX only for the time being.
 
-Below there is a screen shot of both windows.
+Below there is a screenshot and a photo of the display.
 
-![]()<img src=kpa500_remote.0.2.0.jpeg width=550>
+![]()<img src=kpa500_remote.0.2.4.png height=1007> ![]()<img src=hamlib2kpa500_display.JPG height=1007>
+
+
 
