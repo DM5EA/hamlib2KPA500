@@ -1,3 +1,7 @@
+### Version 0.2.4 (2022-01-02)
+- Focus of the project slightly changed. I now use a wavershare display directly connected to the Rapsberry while I work localy in the shack. For remote it is possible to open a VNC connection. The window opened is fullscreen.
+- I prepared the code to make the colors and the fontsize configurable.
+
 ### Version 0.2.3 (2024-11-25)
 - Changed handling if the oper state changes. Avoid wrong PWR settings this way.
 
