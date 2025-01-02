@@ -12,7 +12,7 @@ be used via RVNC as well. The window opened by the program is fullscreen. See ph
 
 More details about the display user may be fount here:
 
-https://www.waveshare.com/product/raspberry-pi/displays/lcd-oled/6.25inch-720x1560-lcd.htm
+[6.25inch Capacitive Touch Display](https://www.waveshare.com/product/raspberry-pi/displays/lcd-oled/6.25inch-720x1560-lcd.htm)
 
 By today the following functions are available:
 - Switch band of the KPA500 according to the frequency on the TRX
