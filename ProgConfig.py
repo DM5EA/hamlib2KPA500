@@ -100,7 +100,7 @@ class ProgConfig:
 #      self.ConfigWindow.geometry(f"+{toplevel_offsetx + padx}+{toplevel_offsety + pady}")
 
 # Use a frame inside the root window to be able to mix "pack" with "grid"
-# 1st fram
+# 1st frame
 
       self.ConfigWindow=Frame(rootWindow, bg=self.BGC)
       
