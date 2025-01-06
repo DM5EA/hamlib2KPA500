@@ -71,7 +71,7 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.3.0'
+  version = '0.3.1'
   
   myConfig = ProgConfig.ProgConfig()
  
@@ -131,7 +131,7 @@ if __name__ == '__main__':
 # Frame for band info
 
   topBandframe = Frame(root,  highlightbackground="blue", highlightthickness=2, bg=myConfig.BGC)
-  topBandframe.pack(pady=30,side=TOP)
+  topBandframe.pack(pady=(30, 10),side=TOP)
 
 # Frame to show the power level
 

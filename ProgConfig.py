@@ -102,16 +102,16 @@ class ProgConfig:
 # Use a frame inside the root window to be able to mix "pack" with "grid"
 # 1st frame
 
-      self.ConfigWindow=Frame(rootWindow, bg=self.BGC)
+      self.ConfigWindow=Frame(rootWindow, bg=self.BGC, highlightbackground="royalblue2", highlightthickness=2)
       
-      Label00 = Label(self.ConfigWindow, text = "TRX power per band", highlightbackground="orange", highlightthickness=2, fg=self.FGC, bg=self.BGC)
+      Label00 = Label(self.ConfigWindow, text = " TRX power per band ", highlightbackground="orange", highlightthickness=2, fg=self.FGC, bg=self.BGC)
       Label00.grid(row=0, column=0, columnspan=3, padx=1, pady=3)
 
       Label10 = Label(self.ConfigWindow, text = "Band", fg=self.FGC, bg=self.BGC)
-      Label10.grid(row=1, column=0, columnspan=1, padx=8, pady=1, sticky=W)
+      Label10.grid(row=1, column=0, columnspan=1, padx=18, pady=1, sticky=W)
     
       Label11 = Label(self.ConfigWindow, text = "Power", fg=self.FGC, bg=self.BGC)
-      Label11.grid(row=1, column=1, columnspan=2, padx=8, pady=1, sticky=W)
+      Label11.grid(row=1, column=1, columnspan=2, padx=18, pady=1, sticky=W)
     
       i = 0
       bandArrLabel = []
@@ -120,30 +120,30 @@ class ProgConfig:
 
       for key, value in self.PWRperBand.items():
         bandArrLabel.append(Label(self.ConfigWindow, text = key, fg=self.FGC, bg=self.BGC))
-        bandArrLabel[i].grid(row=i+2, column=0, columnspan=1, padx=8, pady=1, sticky=W)
+        bandArrLabel[i].grid(row=i+2, column=0, columnspan=1, padx=18, pady=1, sticky=W)
         self.bandPWRBox.append(Scale(self.ConfigWindow, from_=10, to=40, 
                              orient='horizontal', tickinterval=0, 
                              length = 400, width = 30, showvalue = 0, command = self.sliderMoved, fg=self.FGC, bg=self.BGC))
         self.bandPWRBox[i].set(value)
-        self.bandPWRBox[i].grid(row=i+2, column=1, columnspan=1, padx=8, pady=1, sticky=W)
+        self.bandPWRBox[i].grid(row=i+2, column=1, columnspan=1, padx=18, pady=1, sticky=W)
         self.bandWattLabel.append(Label(self.ConfigWindow, text = str(value-1) + ' W', fg=self.FGC, bg=self.BGC))
-        self.bandWattLabel[i].grid(row=i+2, column=2, columnspan=1, padx=8, pady=1, sticky=W)
+        self.bandWattLabel[i].grid(row=i+2, column=2, columnspan=1, padx=18, pady=1, sticky=W)
         i+=1
 
 # 2nd Frame
 
-      self.ConfigWindow2=Frame(rootWindow, bg=self.BGC)
-      self.ConfigWindow2.pack(side=BOTTOM,fill=X)
-      self.ConfigWindow.pack(side=BOTTOM,fill=X)
+      self.ConfigWindow2=Frame(rootWindow, bg=self.BGC, highlightbackground="royalblue2", highlightthickness=2)
+      self.ConfigWindow.pack(side=TOP,fill=X, padx=4)
+      self.ConfigWindow2.pack(side=TOP,fill=X, pady=(10,1), padx=4)
 
-      Label03 = Label(self.ConfigWindow2, text = "Parameters", highlightbackground="orange", highlightthickness=2, fg=self.FGC, bg=self.BGC)
+      Label03 = Label(self.ConfigWindow2, text = " Parameters ", highlightbackground="orange", highlightthickness=2, fg=self.FGC, bg=self.BGC)
       Label03.grid(row=0, column=0, columnspan=2, padx=1, pady=5)
     
       Label13 = Label(self.ConfigWindow2, text = "Key", fg=self.FGC, bg=self.BGC)
-      Label13.grid(row=1, column=0, columnspan=1, padx=6, pady=1, sticky=W)
+      Label13.grid(row=1, column=0, columnspan=1, padx=18, pady=1, sticky=W)
     
       Label14 = Label(self.ConfigWindow2, text = "Parameter", fg=self.FGC, bg=self.BGC)
-      Label14.grid(row=1, column=1, columnspan=1, padx=6, pady=1, sticky=W)
+      Label14.grid(row=1, column=1, columnspan=1, padx=18, pady=1, sticky=W)
 
 # Default font size
 
@@ -152,22 +152,22 @@ class ProgConfig:
       def_font.config(size=22)
      
       Label23 = Label(self.ConfigWindow2, text = "hamlib Rig ID", fg=self.FGC, bg=self.BGC)
-      Label23.grid(row=2, column=0, columnspan=1, padx=6, pady=1, sticky=W)
+      Label23.grid(row=2, column=0, columnspan=1, padx=18, pady=1, sticky=W)
       hamlibHostBox = Entry(self.ConfigWindow2, width=17, bg=self.entryBGC)
       hamlibHostBox.insert(0, self.HAMLIBRIG)
-      hamlibHostBox.grid(row=2, column=1, columnspan=1, padx=6, pady=1, sticky=W)
+      hamlibHostBox.grid(row=2, column=1, columnspan=1, padx=18, pady=1, sticky=W)
     
       Label33 = Label(self.ConfigWindow2, text = "hamlib Connection", fg=self.FGC, bg=self.BGC)
-      Label33.grid(row=3, column=0, columnspan=1, padx=6, pady=1, sticky=W)
+      Label33.grid(row=3, column=0, columnspan=1, padx=18, pady=1, sticky=W)
       hamlibPortBox = Entry(self.ConfigWindow2, width=17, bg=self.entryBGC)
       hamlibPortBox.insert(0, self.HAMLIBCONN)
-      hamlibPortBox.grid(row=3, column=1, columnspan=1, padx=6, pady=1, sticky=W)
+      hamlibPortBox.grid(row=3, column=1, columnspan=1, padx=18, pady=1, sticky=W)
     
       Label43 = Label(self.ConfigWindow2, text = "KPA500 COM Port", fg=self.FGC, bg=self.BGC)
-      Label43.grid(row=4, column=0, columnspan=1, padx=6, pady=1, sticky=W)
+      Label43.grid(row=4, column=0, columnspan=1, padx=18, pady=1, sticky=W)
       comPortBox = Entry(self.ConfigWindow2, width=17, bg=self.entryBGC)
       comPortBox.insert(0, self.COMPORT)
-      comPortBox.grid(row=4, column=1, columnspan=1, padx=6, pady=1, sticky=W)
+      comPortBox.grid(row=4, column=1, columnspan=1, padx=18, pady=1, sticky=W)
     
       CloseButton = Button(
         self.ConfigWindow2,
@@ -175,7 +175,7 @@ class ProgConfig:
         command=self.closeWindow,
         height = self.ButtonHeight
       )
-      CloseButton.grid(row=6, column=1, columnspan=1, padx=1, pady=5, sticky=E)
+      CloseButton.grid(row=6, column=1, columnspan=1, padx=(1,18), pady=5, sticky=E)
       
 # Handle the default close window button 
 
