@@ -1,4 +1,4 @@
-### Version 0.3.0 (2022-01-02)
+### Version 0.3.1 (2022-01-06)
 - Changed the appearance of the config part of the window. 
 
 ### Version 0.3.0 (2022-01-02)
