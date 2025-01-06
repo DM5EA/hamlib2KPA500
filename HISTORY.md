@@ -1,5 +1,5 @@
 ### Version 0.3.0 (2022-01-02)
-- Changed the appearance of the config part of the wndow. 
+- Changed the appearance of the config part of the window. 
 
 ### Version 0.3.0 (2022-01-02)
 - Focus of the project slightly changed. I now use a wavershare display directly connected to the Rapsberry while I work localy in the shack. For remote it is possible to open a VNC connection. The window opened is fullscreen.
