@@ -71,7 +71,7 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.3.1'
+  version = '0.3.2'
   
   myConfig = ProgConfig.ProgConfig()
  
@@ -189,7 +189,7 @@ if __name__ == '__main__':
 # Similary for the SWR
 # Later we change the size of the rectangles according to the measured levels
 
-  PwrLabel = Label(topPWRframe, text = "PWR ", fg = myConfig.FGC, bg=myConfig.BGC)
+  PwrLabel = Label(topPWRframe, text = " PWR ", fg = myConfig.FGC, bg=myConfig.BGC)
   PwrLabel.pack(padx=1,side=LEFT)
 #  PwrCanvas = Canvas(topPWRframe, bg='whitesmoke', width=460, height=myConfig.BarHeight)
   PwrCanvas = Canvas(topPWRframe, bg=myConfig.BGC, width=460, height=myConfig.BarHeight)
@@ -197,7 +197,9 @@ if __name__ == '__main__':
   PwrYellowRect = PwrCanvas.create_rectangle(368,0,368,myConfig.BarHeight,fill='orange',outline='orange')
   PwrRedRect = PwrCanvas.create_rectangle(414,0,414,myConfig.BarHeight,fill='red',outline='red')
   PwrCanvas.pack(side=LEFT)
-
+  PEPLabel = Label(topPWRframe, text = " 000 W ", width=7, fg = myConfig.FGC, bg=myConfig.BGC)
+  PEPLabel.pack(padx=1,side=LEFT)
+  
   SwrLabel = Label(topSWRframe, text = "SWR ", fg = myConfig.FGC, bg=myConfig.BGC)
   SwrLabel.pack(padx=1,side=LEFT)
   SwrCanvas = Canvas(topSWRframe, bg=myConfig.BGC, width=200, height=myConfig.BarHeight)
@@ -369,13 +371,13 @@ if __name__ == '__main__':
 
   def run_in_thread2(event):
     
+    cnt = 0
+    ioldpwr = 0
     while not event.is_set():
 
 # Read and display the current putput power and SWR
 
       Sresp = myKPA500.getValue(myKPA500.PwrCMD)
-#      print(Sresp)
-#      print(KPA500_ready)
       if Sresp[1:3] == 'WS' and Sresp[3:6] != ';':    # Second part checks, if the PA is really on
           myKPA500.KPA500_ready=True
           pwr = Sresp[3:6]
@@ -395,6 +397,15 @@ if __name__ == '__main__':
             PwrCanvas.coords(PwrRedRect, 414, 0, x1, myConfig.BarHeight)
           else:
             PwrCanvas.coords(PwrRedRect, 414, 0, 414, myConfig.BarHeight)
+          if ipwr > ioldpwr:
+            PEPLabel.configure(text = ' ' + pwr + ' W')
+            ioldpwr = ipwr
+            cnt = 0
+          else:
+            cnt += 1
+            if cnt > 50:
+              PEPLabel.configure(text = ' ' + pwr + ' W')
+              cnt = 0
 
           swr = Sresp[7:10]
           try:
