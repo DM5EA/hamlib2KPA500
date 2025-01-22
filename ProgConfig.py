@@ -19,6 +19,7 @@ class ProgConfig:
     self.BarHeight = 40
     self.FGC = "White"
     self.BGC = "Gray10"
+    self.BGCL = "red4"
     self.entryBGC = "azure"
 
 # Define input power per band
