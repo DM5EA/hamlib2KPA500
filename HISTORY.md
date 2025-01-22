@@ -1,3 +1,6 @@
+### Version 0.4.0 (2022-01-22)
+- Changes in the GUI
+
 ### Version 0.3.2 (2022-01-09)
 - Added kind of PEP power display to show the the maximum output power as a number. 
 
