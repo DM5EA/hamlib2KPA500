@@ -1,3 +1,6 @@
+### Version 0.3.2 (2022-01-09)
+- Added kind of PEP power display to show the the maximum output power as a number. 
+
 ### Version 0.3.1 (2022-01-06)
 - Changed the appearance of the config part of the window. 
 
