@@ -1,3 +1,6 @@
+### Version 0.4.1 (2022-01-23)
+- Added version information to settings screen
+
 ### Version 0.4.0 (2022-01-22)
 - Changes in the GUI
 
