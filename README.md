@@ -32,7 +32,7 @@ Current limitations:
 
 Below there is a screenshot and a photo of the display.
 
-![]()<img src=hamlib2kpa500.0.2.4.png height=503> ![]()<img src=hamlib2kpa500_display.JPG height=503>
+![]()<img src=hamlib2kpa500.0.4.0.jpeg height=503> ![]()<img src=hamlib2kpa500_display.JPG height=503>
 
 
 
