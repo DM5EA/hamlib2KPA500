@@ -71,7 +71,6 @@ if __name__ == '__main__':
 # Make some basic definitions
 
   killer = GracefulKiller()
-  version = '0.4.0'
   
   myConfig = ProgConfig.ProgConfig()
  
@@ -306,7 +305,7 @@ if __name__ == '__main__':
 
   DefaultBtnColor = ExitButton.cget("background")
   
-  root.title("KPA500 Remote V " + version + " © DM5EA")
+  root.title("KPA500 Remote V " + myConfig.version + " © DM5EA")
 
 # Loop until event is sent - frist thread - handle band changes and OperState changes
 

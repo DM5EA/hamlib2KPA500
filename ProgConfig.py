@@ -21,6 +21,7 @@ class ProgConfig:
     self.BGC = "Gray10"
     self.BGCL = "red4"
     self.entryBGC = "azure"
+    self.version = "0.4.1"
 
 # Define input power per band
 
@@ -177,6 +178,10 @@ class ProgConfig:
         height = self.ButtonHeight
       )
       CloseButton.grid(row=6, column=1, columnspan=1, padx=(1,18), pady=5, sticky=E)
+      
+      Label51 = Label(self.ConfigWindow2, text = "KPA500 Remote V " + self.version + " © DM5EA", fg=self.FGC, bg=self.BGC)
+      Label51.grid(row=6, column=0, padx=18, sticky=SW)
+      Label51.config(font=('Helvetica', 14))
       
 # Handle the default close window button 
 
