@@ -1,5 +1,6 @@
 import json
 import os.path
+import subprocess
 from sys import platform
 from tkinter import *
 
@@ -14,14 +15,18 @@ class ProgConfig:
     self.HAMLIBCONN = '192.168.43.148:4533'
     self.COMPORT = '/dev/ttyUSB0'
     self.FanSpeed = 0
+    self.ScreenTimeout = "30"
     self.ConfigWindow = None
-    self.ButtonHeight = 3
+    self.ButtonHeight = 2
     self.BarHeight = 40
     self.FGC = "White"
     self.BGC = "Gray10"
     self.BGCL = "red4"
     self.entryBGC = "azure"
-    self.version = "0.4.1"
+    self.version = "0.4.2"
+    self.screenCMD = "/usr/bin/xset"
+    self.screenWakeCMD = " dpms force on"
+    self.screenTimeoutCMD = " dpms " + self.ScreenTimeout + " " + self.ScreenTimeout + " " + self.ScreenTimeout
 
 # Define input power per band
 
@@ -66,6 +71,8 @@ class ProgConfig:
         self.COMPORT = ReadConfig['KPA500ComPort']
       if 'FanSpeed' in ReadConfig:
         self.FanSpeed = ReadConfig['FanSpeed']
+      if 'ScreenTimeout' in ReadConfig:
+        self.ScreenTimeout = ReadConfig['ScreenTimeout']
       if 'PWRperBand' in ReadConfig:
         self.PWRperBand = ReadConfig['PWRperBand']
 
@@ -76,7 +83,8 @@ class ProgConfig:
                   'hamlibRig': self.HAMLIBRIG,
                   'hamlibConn': self.HAMLIBCONN,
                   'KPA500ComPort': self.COMPORT,
-                  'FanSpeed': self.FanSpeed}
+                  'FanSpeed': self.FanSpeed,
+                  'ScreenTimeout': self.ScreenTimeout}
                 
     json_object = json.dumps(ConfigJSON, indent=3)
     
@@ -170,18 +178,30 @@ class ProgConfig:
       comPortBox = Entry(self.ConfigWindow2, width=17, bg=self.entryBGC)
       comPortBox.insert(0, self.COMPORT)
       comPortBox.grid(row=4, column=1, columnspan=1, padx=18, pady=1, sticky=W)
-    
+
+      Label51 = Label(self.ConfigWindow2, text = "Screen timeout (s)", fg=self.FGC, bg=self.BGC)
+      Label51.grid(row=5, column=0, columnspan=1, padx=18, pady=1, sticky=W)
+      ScreenTimeoutSlider = Scale(self.ConfigWindow2, 
+                                  from_=0, to=600, 
+                                  orient='horizontal', 
+                                  command = self.ScreenTimeout_Changed, 
+                                  length = 325, tickinterval=0,
+                                  width = 30, fg = self.FGC, bg=self.BGC)
+      ScreenTimeoutSlider.set(self.ScreenTimeout)
+      ScreenTimeoutSlider.grid(row=5, column=1, columnspan=1, padx=18, pady=1, sticky=W)
+      ScreenTimeoutSlider.config(font=('Helvetica', 14))
+
       CloseButton = Button(
         self.ConfigWindow2,
         text="Hide settings",
         command=self.closeWindow,
         height = self.ButtonHeight
       )
-      CloseButton.grid(row=6, column=1, columnspan=1, padx=(1,18), pady=5, sticky=E)
+      CloseButton.grid(row=7, column=1, columnspan=1, padx=(1,18), pady=5, sticky=E)
       
-      Label51 = Label(self.ConfigWindow2, text = "KPA500 Remote V " + self.version + " © DM5EA", fg=self.FGC, bg=self.BGC)
-      Label51.grid(row=6, column=0, padx=18, sticky=SW)
-      Label51.config(font=('Helvetica', 14))
+      Label61 = Label(self.ConfigWindow2, text = "KPA500 Remote V " + self.version + " © DM5EA", fg=self.FGC, bg=self.BGC)
+      Label61.grid(row=7, column=0, padx=18, sticky=SW)
+      Label61.config(font=('Helvetica', 14))
       
 # Handle the default close window button 
 
@@ -210,7 +230,16 @@ class ProgConfig:
         self.hamlibContext.setTXPWR(self.PWRperBand[key])
         
       i+=1
-  
+
+  def ScreenTimeout_Changed(self, val):
+    self.ScreenTimeout = val
+    self.screenTimeoutCMD = " dpms " + self.ScreenTimeout + " " + self.ScreenTimeout + " " + self.ScreenTimeout
+
+# Set new timeout
+
+    subprocess.run(self.screenCMD + self.screenWakeCMD, shell=True)
+    subprocess.run(self.screenCMD + self.screenTimeoutCMD, shell=True)
+
   def saveSettings(self):
   
     i = 0

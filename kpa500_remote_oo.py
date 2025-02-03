@@ -24,6 +24,7 @@ import os
 import json
 import os.path
 import ctypes
+import subprocess
 
 from tkinter import *    # Doing this way, there is no need to write <module>.<class>
 
@@ -63,6 +64,10 @@ def quit():
 def FANSpeed_Changed(event):
   myConfig.FanSpeed = FANCTRLSlider.get()
   myKPA500.setFanSpeed(FANCTRLSlider.get())
+
+def WakeScreen():
+  subprocess.run(myConfig.screenCMD + myConfig.screenWakeCMD, shell=True)
+  subprocess.run(myConfig.screenCMD + myConfig.screenTimeoutCMD, shell=True)
 
 # Start the main program
 
@@ -104,6 +109,12 @@ if __name__ == '__main__':
   
   myConfig.setKPA500Context(myKPA500)
 
+# Set screen timeout
+
+  WakeScreen()
+
+  ActPWR = 0
+  
 # Build the main window
 
   root = Tk()
@@ -310,6 +321,7 @@ if __name__ == '__main__':
 # Loop until event is sent - frist thread - handle band changes and OperState changes
 
   def run_in_thread1(event):
+    global ActPWR
 
     while not event.is_set():
       
@@ -324,12 +336,19 @@ if __name__ == '__main__':
           myKPA500.OperStat = False              # As per config of the KPA500 after band change it is set to STBY
           myTRX.ackBandChange()                  # |--> We set this explicit here to avoid problems in PWR handling
         ActBandLabel.configure(text = newBand)   # |--> The other thread might read to changed Oper State to late
- 
+
+# Deactivate screen saver on transmit
+
+      if ActPWR > 0:
+        WakeScreen()
+
 # Need to do this here and not in the other thread. Otherwise we might not get the
 # right power setting because of the wrong band used.
 # BUT: We might want to redo this part as it is a bit ugly
  
       if myKPA500.OldOperStat != myKPA500.OperStat:
+        WakeScreen()
+        
         if myKPA500.OperStat:                    
           myTRX.getInitialPWR()
           try:
@@ -377,6 +396,8 @@ if __name__ == '__main__':
 
   def run_in_thread2(event):
     
+    global ActPWR
+    
     cnt = 0
     ioldpwr = 0
     while not event.is_set():
@@ -389,8 +410,10 @@ if __name__ == '__main__':
           pwr = Sresp[3:6]
           try:
             ipwr = int(pwr)
+            ActPWR = ipwr
           except:
             pass
+            ActPWR = 0
           x1 = min(ipwr, 500) * 0.736
           PwrCanvas.coords(PwrGreenRect, 0, 0, x1, myConfig.BarHeight)
           if ipwr > 500:
@@ -403,14 +426,18 @@ if __name__ == '__main__':
             PwrCanvas.coords(PwrRedRect, 414, 0, x1, myConfig.BarHeight)
           else:
             PwrCanvas.coords(PwrRedRect, 414, 0, 414, myConfig.BarHeight)
+
+# Calculate PEP
+
           if ipwr > ioldpwr:
             PEPLabel.configure(text = ' ' + pwr + ' W')
             ioldpwr = ipwr
             cnt = 0
           else:
             cnt += 1
-            if cnt > 50:
+            if cnt > 150:
               PEPLabel.configure(text = ' ' + pwr + ' W')
+              ioldpwr = ipwr
               cnt = 0
 
           swr = Sresp[7:10]
