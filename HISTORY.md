@@ -1,5 +1,6 @@
 ### Version 0.4.2 (2022-02-03)
 - Added screen saver, will be deactivated on oper change and transmit
+- Screen saver timeout can be set in settings dialog and is stored to teh config file
 - improved PEP calculation
 
 ### Version 0.4.1 (2022-01-23)
