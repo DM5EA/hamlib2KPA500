@@ -10,7 +10,7 @@ frequency from the TRX (and control its output power) this solution should work 
 The current implementation is fixed on a small display with 720x1560 connected directly to the Raspberry 4 HDMI. Nevertheless it can
 be used via RVNC as well. The window opened by the program is fullscreen. See photos below.
 
-More details about the display user may be fount here:
+More details about the display used may be fount here:
 
 [6.25inch Capacitive Touch Display](https://www.waveshare.com/product/raspberry-pi/displays/lcd-oled/6.25inch-720x1560-lcd.htm)
 
