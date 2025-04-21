@@ -138,12 +138,12 @@ if __name__ == '__main__':
 
 # Frame for band info
 
-  topBandframe = Frame(root,  highlightbackground="royalblue2", highlightthickness=2, bg='orange')
+  topBandframe = Frame(root,  highlightbackground="purple1", highlightthickness=2, bg='orange')
   topBandframe.pack(pady=(30, 3),side=TOP, fill=X)
 
 # Frame to show the power and SWR level
 
-  topPWRframe = Frame(root, highlightbackground="orange", highlightthickness=2, bg=myConfig.BGCL)
+  topPWRframe = Frame(root, highlightbackground="red", highlightthickness=2, bg=myConfig.BGCL)
   topPWRframe.pack(pady=(0,0),side=TOP, fill=X)
   
 # Frame to show the current values
@@ -153,22 +153,22 @@ if __name__ == '__main__':
 
 # Frame to show fault info
   
-  topFaultframe = Frame(root, highlightbackground="red", highlightthickness=2, bg=myConfig.BGC)
+  topFaultframe = Frame(root, highlightbackground="yellow", highlightthickness=2, bg=myConfig.BGC)
   topFaultframe.pack(pady=3,side=TOP, fill=X)
 
 # Frame to show FW rev and ser no
 
-  topFWframe = Frame(root, highlightbackground="orange", highlightthickness=2, bg=myConfig.BGC)
+  topFWframe = Frame(root, highlightbackground="green yellow", highlightthickness=2, bg=myConfig.BGC)
   topFWframe.pack(pady=3,side=TOP, fill=X)
 
 # Frame to show TRX actual PWR set
 
-  topTRXPWRframe = Frame(root, highlightbackground="orange", highlightthickness=2, bg=myConfig.BGC)
+  topTRXPWRframe = Frame(root, highlightbackground="spring green", highlightthickness=2, bg=myConfig.BGC)
   topTRXPWRframe.pack(pady=3,side=TOP, fill=X)
 
 # Frame to show fan control
 
-  topFANCTRLframe = Frame(root, highlightbackground="orange", highlightthickness=2, bg=myConfig.BGC)
+  topFANCTRLframe = Frame(root, highlightbackground="royalblue2", highlightthickness=2, bg=myConfig.BGC)
   topFANCTRLframe.pack(pady=3,side=TOP, fill=X)
 
 # Bottom frame for all buttons
