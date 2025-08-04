@@ -73,6 +73,7 @@ class ProgConfig:
         self.FanSpeed = ReadConfig['FanSpeed']
       if 'ScreenTimeout' in ReadConfig:
         self.ScreenTimeout = ReadConfig['ScreenTimeout']
+        self.ScreenTimeout_Changed(self.ScreenTimeout);
       if 'PWRperBand' in ReadConfig:
         self.PWRperBand = ReadConfig['PWRperBand']
 
