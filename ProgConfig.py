@@ -23,7 +23,7 @@ class ProgConfig:
     self.BGC = "Gray10"
     self.BGCL = "red4"
     self.entryBGC = "azure"
-    self.version = "0.4.2"
+    self.version = "0.6.0"
     self.screenCMD = "/usr/bin/xset"
     self.screenWakeCMD = " dpms force on"
     self.screenTimeoutCMD = " dpms " + self.ScreenTimeout + " " + self.ScreenTimeout + " " + self.ScreenTimeout

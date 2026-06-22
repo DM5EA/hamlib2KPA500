@@ -2,7 +2,7 @@ import serial
 import time
 import threading    # Needed for threat save locking the com port operations
 
-# Deamon mode: This class is ready
+# Daemon mode: This class is ready
 
 class KPA500:
   def __init__(self):

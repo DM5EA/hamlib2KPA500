@@ -15,6 +15,7 @@ class TRXhamlib:
     self.oldBand = ''
     self.actBand = ''
     self.bandChange = True
+    self.connected = False
     
     Hamlib.rig_set_debug(Hamlib.RIG_DEBUG_NONE)
 
@@ -33,7 +34,11 @@ class TRXhamlib:
 
     try:
       self.myHamlib.open()
+#      f = self.myHamlib.get_freq()
+#      if f is none:
+#        self.myHamlib = None 
     except:
+      print("Exception raised")
       self.myHamlib = None
 
     if self.myHamlib is None:
