@@ -27,6 +27,7 @@ import ctypes
 import subprocess
 
 from tkinter import *    # Doing this way, there is no need to write <module>.<class>
+from tkinter import messagebox 
 
 # How to react on SIGTERM and SIGINT
 
@@ -38,11 +39,11 @@ class GracefulKiller:
 
   def exit_gracefully(self, signum, frame):
     self.kill_now = True
-    quit()
+    quit(False)
 
 # Call if Exit is pressed or SIGTERM is received (GracefulKiller)
 
-def quit():
+def quit(askForShutdown):
   global root
   global thread1
   global thread2
@@ -51,7 +52,15 @@ def quit():
   global myConfig
   
   myConfig.writeConfig()
-      
+  
+  if askForShutdown:
+    YN = messagebox.askyesno("Raspi herunterfahren", "Raspi jetzt herunterfahren?")
+    if YN:  # Wenn der Benutzer auf "Ja" klickt
+        print("Raspi wird heruntergefahren...")
+        subprocess.run(["sudo", "shutdown", "-h", "now"])
+    else:
+        print("Vorgang abgebrochen. Programm wird normal beendet.")
+
   stop_event.set()
   thread1.join(0.1)
   thread2.join(0.1)
@@ -69,8 +78,22 @@ def WakeScreen():
   subprocess.run(myConfig.screenCMD + myConfig.screenWakeCMD, shell=True)
   subprocess.run(myConfig.screenCMD + myConfig.screenTimeoutCMD, shell=True)
 
-# Start the main program
+def ColorTRXPWR(TRXActPWR):
+  if TRXActPWR > 39:
+    TRXPWRLabel.configure(foreground='red')
+    TRXPWRUnit.configure(foreground='red')
+    TRXPWRLevel.configure(foreground='red')
+  elif TRXActPWR > 37:
+    TRXPWRLabel.configure(foreground='yellow')
+    TRXPWRUnit.configure(foreground='yellow')
+    TRXPWRLevel.configure(foreground='yellow')
+  else:
+    TRXPWRLabel.configure(foreground='green')
+    TRXPWRUnit.configure(foreground='green')
+    TRXPWRLevel.configure(foreground='green')
 
+# Start the main program
+    
 if __name__ == '__main__':
 
 # Make some basic definitions
@@ -120,6 +143,7 @@ if __name__ == '__main__':
   root = Tk()
   root.attributes('-fullscreen',True)
   root.configure(bg=myConfig.BGC)
+  root.config(cursor="none")
 
   appDir = os.path.dirname(__file__)
   photo = PhotoImage(file = appDir + '/kpa500_remote_ico.png')
@@ -311,14 +335,14 @@ if __name__ == '__main__':
   ConfigButton = Button(bottomframe, text = 'Settings', command = lambda: myConfig.openConfigWindow(root), width = 6, height = myConfig.ButtonHeight ) 
   ConfigButton.pack(padx=3, side=LEFT)
   
-  ExitButton = Button(bottomframe, text = 'Exit', command = quit, width = 5, height = myConfig.ButtonHeight) 
+  ExitButton = Button(bottomframe, text = 'Exit', command = lambda: quit(True), width = 5, height = myConfig.ButtonHeight) 
   ExitButton.pack(padx=3, side=LEFT)
 
   DefaultBtnColor = ExitButton.cget("background")
   
   root.title("KPA500 Remote V " + myConfig.version + " © DM5EA")
 
-# Loop until event is sent - frist thread - handle band changes and OperState changes
+# Loop until event is sent - first thread - handle band changes and OperState changes
 
   def run_in_thread1(event):
     global ActPWR
@@ -348,6 +372,10 @@ if __name__ == '__main__':
  
       if myKPA500.OldOperStat != myKPA500.OperStat:
         WakeScreen()
+
+# Version 0.5.1 increase/decrease fan speed on oper change
+    
+        ActFanSpeed = FANCTRLSlider.get()
         
         if myKPA500.OperStat:                    
           myTRX.getInitialPWR()
@@ -356,8 +384,20 @@ if __name__ == '__main__':
           except:
             newPWR = 30
           myTRX.setTXPWR(newPWR)
+
+          ActFanSpeed += 1
+          if ActFanSpeed > 6:
+            ActFanSpeed = 6
+          FANCTRLSlider.set(ActFanSpeed)
+
         else:
           myTRX.restoreInitialPWR()
+
+          ActFanSpeed -= 1
+          if ActFanSpeed < 0:
+            ActFanSpeed = 0
+          FANCTRLSlider.set(ActFanSpeed)
+
         myKPA500.OldOperStat = myKPA500.OperStat
 
 # Handle the screen elements
@@ -367,15 +407,11 @@ if __name__ == '__main__':
       
       if myKPA500.OperStat:
         myConfig.setPWRSliderForBand(newBand, TRXActPWR)
+        ColorTRXPWR(TRXActPWR)
         if TRXActPWR > 39:
-          TRXPWRLevel.configure(foreground='red')
           myKPA500.setKP500toSTBY()
-        elif TRXActPWR > 37:
-          TRXPWRLevel.configure(foreground='yellow')
-        else:
-          TRXPWRLevel.configure(foreground='green')
       else:
-        TRXPWRLevel.configure(foreground='green')
+        ColorTRXPWR(TRXActPWR)
  
 # Now read the operating state
 
