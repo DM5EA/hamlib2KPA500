@@ -12,8 +12,8 @@ from tkinter import *
 class ProgConfig:
   def __init__(self):
     self.HAMLIBRIG = 2
-    self.HAMLIBCONN = '192.168.43.148:4533'
-    self.COMPORT = '/dev/ttyUSB0'
+    self.HAMLIBCONN = '192.168.43.30:4534'
+    self.COMPORT = '/dev/ttyUSB2'
     self.FanSpeed = 0
     self.ScreenTimeout = "30"
     self.ConfigWindow = None
@@ -23,7 +23,7 @@ class ProgConfig:
     self.BGC = "Gray10"
     self.BGCL = "red4"
     self.entryBGC = "azure"
-    self.version = "0.6.0"
+    self.version = "0.6.1"
     self.screenCMD = "/usr/bin/xset"
     self.screenWakeCMD = " dpms force on"
     self.screenTimeoutCMD = " dpms " + self.ScreenTimeout + " " + self.ScreenTimeout + " " + self.ScreenTimeout
@@ -61,21 +61,24 @@ class ProgConfig:
       with open(self.confFileName, 'r') as file:
         ConfigData = file.read()
       
-      ReadConfig = json.loads(ConfigData)
+      try: 
+        ReadConfig = json.loads(ConfigData)
       
-      if 'hamlibRig' in ReadConfig:
-        self.HAMLIBRIG=ReadConfig['hamlibRig']
-      if 'hamlibConn' in ReadConfig:
-        self.HAMLIBCONN = ReadConfig['hamlibConn']
-      if 'KPA500ComPort' in ReadConfig:
-        self.COMPORT = ReadConfig['KPA500ComPort']
-      if 'FanSpeed' in ReadConfig:
-        self.FanSpeed = ReadConfig['FanSpeed']
-      if 'ScreenTimeout' in ReadConfig:
-        self.ScreenTimeout = ReadConfig['ScreenTimeout']
-        self.ScreenTimeout_Changed(self.ScreenTimeout);
-      if 'PWRperBand' in ReadConfig:
-        self.PWRperBand = ReadConfig['PWRperBand']
+        if 'hamlibRig' in ReadConfig:
+          self.HAMLIBRIG=ReadConfig['hamlibRig']
+        if 'hamlibConn' in ReadConfig:
+          self.HAMLIBCONN = ReadConfig['hamlibConn']
+        if 'KPA500ComPort' in ReadConfig:
+          self.COMPORT = ReadConfig['KPA500ComPort']
+        if 'FanSpeed' in ReadConfig:
+          self.FanSpeed = ReadConfig['FanSpeed']
+        if 'ScreenTimeout' in ReadConfig:
+          self.ScreenTimeout = ReadConfig['ScreenTimeout']
+          self.ScreenTimeout_Changed(self.ScreenTimeout);
+        if 'PWRperBand' in ReadConfig:
+          self.PWRperBand = ReadConfig['PWRperBand']
+      except:
+        pass
 
 # Write config to file (confFileName is a variable of this class)
     
